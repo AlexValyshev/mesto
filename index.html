@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Проектная работа №4 Александра Валышева на Яндекс.Практикуме">
+  <meta name="keywords" content="training">
+  <meta name="author" content="Александр Валышев">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>mesto</title>
+</head>
+
+<body>
+  <div class="page">
+    <header class="header page__container">
+      <img class="header__logo" src="./images/logo-mesto.svg" alt="Логотип Mesto-Russia">
+    </header>
+
+    <main class="content ">
+      <section class="profile page__container">
+        <img class="profile__avatar" src="./images/iv-custo.jpg" alt="Фото Жак-Ив Кусто">
+        <div class="profile__info">
+          <div class="profile__name-container">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="profile__editbutton"><img class="profile__image-pencil" src="./images/pencil.svg"
+                alt="Карандаш"></button>
+          </div>
+          <p class="profile__job">Исследователь океана</p>
+        </div>
+        <button class="profile__addbutton"><img class="profile__image-plus" src="./images/plus.svg"
+            alt="Знак плюс"></button>
+      </section>
+
+      <section class="foto-place page__container">
+        <ul class="foto-place__elements">
+          <li class="foto-place__element">
+            <img src="./images/st-peterburg.jpg" alt="Санкт-Петербург, Исакиевский собор" class="foto-place__image">
+            <div class="foto-place__group">
+              <h2 class="foto-place__title">Санкт-Петербург</h2>
+              <img src="./images/like.svg" alt="Лайк-Сердечко" class="foto-place__like">
+            </div>
+          </li>
+          <li class="foto-place__element">
+            <img src="./images/karelia.jpg" alt="Карелия, каньоны" class="foto-place__image">
+            <div class="foto-place__group">
+              <h2 class="foto-place__title">Карелия</h2>
+              <img src="./images/like.svg" alt="Лайк-Сердечко" class="foto-place__like">
+            </div>
+          </li>
+          <li class="foto-place__element">
+            <img src="./images/sevastopol.jpg" alt="Севастополь, вид на бухту" class="foto-place__image">
+            <div class="foto-place__group">
+              <h2 class="foto-place__title">Севастополь</h2>
+              <img src="./images/like.svg" alt="Лайк-Сердечко" class="foto-place__like">
+            </div>
+          </li>
+          <li class="foto-place__element">
+            <img src="./images/novosibirsk.jpg" alt="Ночной Новосибирск" class="foto-place__image">
+            <div class="foto-place__group">
+              <h2 class="foto-place__title">Новосибирск</h2>
+              <img src="./images/like.svg" alt="Лайк-Сердечко" class="foto-place__like">
+            </div>
+          </li>
+          <li class="foto-place__element">
+            <img src="./images/kamchatka.jpg" alt="Камчатка" class="foto-place__image">
+            <div class="foto-place__group">
+              <h2 class="foto-place__title">Петропавловск-Камчатский</h2>
+              <img src="./images/like.svg" alt="Лайк-Сердечко" class="foto-place__like">
+            </div>
+          </li>
+          <li class="foto-place__element">
+            <img src="./images/sudak.jpg" alt="Судак, залив" class="foto-place__image">
+            <div class="foto-place__group">
+              <h2 class="foto-place__title">Судак</h2>
+              <img src="./images/like.svg" alt="Лайк-Сердечко" class="foto-place__like">
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="popup">
+        <div class="popup__container">
+          <form class="popup__form">
+            <h3 class="popup__form-heading">Редактировать профиль</h3>
+            <fieldset class="popup__info">
+              <label for="name" class="popup__label"></label>
+              <input class="popup__text popup__text_margin_name" type="text" id="name" name="name" placeholder="Имя"
+                required>
+              <label for="job" class="popup__label"></label>
+              <input class="popup__text popup__text_margin_job" type="text" id="job" name="job" placeholder="О себе"
+                required>
+            </fieldset>
+            <button class="popup__button" type="submit">Сохранить</button>
+          </form>
+          <img class="popup__image" src="./images/plus.svg" alt="Крестик закрытия">
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer page__container">
+      <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+    </footer>
+  </div>
+  <script src="./scripts/script.js"></script>
+</body>
+
+</html>

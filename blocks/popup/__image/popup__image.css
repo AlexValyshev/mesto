@@ -1,0 +1,14 @@
+.popup__image {
+  width: 41px;
+  height: 41px;
+  transform: rotate(45deg);
+  position: absolute;
+  left: calc((426/430)*100%);
+  bottom: calc((326/331)*100%);
+  cursor: pointer;
+  transition: opacity 0.3s linear;
+}
+
+.popup__image:hover {
+  opacity: 0.6;
+}

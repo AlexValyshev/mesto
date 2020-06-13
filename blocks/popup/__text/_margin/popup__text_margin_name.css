@@ -1,0 +1,10 @@
+.popup__text_margin_name {
+  margin: 0;
+  margin-bottom: 30px;
+}
+
+@media screen and (min-width: 1440px) {
+  .popup__text_margin_name {
+    margin-bottom: calc((30/358)*100%);
+  }
+}

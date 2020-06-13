@@ -1,0 +1,9 @@
+.popup__text_margin_job {
+  margin: 0;
+  margin-bottom: 48px;
+}
+@media screen and (min-width: 1440px) {
+  .popup__text_margin_job {
+    margin-bottom: calc((48/358)*100%);
+  }
+}

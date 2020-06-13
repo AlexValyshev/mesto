@@ -1,0 +1,20 @@
+@import url(./__elements/foto-place__elements.css);
+@import url(./__element/foto-place__element.css);
+@import url(./__image/foto-place__image.css);
+@import url(./__group/foto-place__group.css);
+@import url(./__title/foto-place__title.css);
+@import url(./__like/foto-place__like.css);
+
+.foto-place {
+  /* border: 1px solid blue; */
+}
+
+@media screen and (max-width: 617px) {
+  .foto-place {
+    padding: 0 calc((100% - 282px)/2);
+  }
+}
+
+
+
+
