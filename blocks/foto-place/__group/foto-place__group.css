@@ -1,5 +1,5 @@
 .foto-place__group {
-  width: calc((246/282)*100%);
+  width: calc((240/282)*100%);
   margin: 0 auto;
   display: flex;
   justify-content: space-between;

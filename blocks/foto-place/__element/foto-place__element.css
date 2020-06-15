@@ -3,5 +3,6 @@
   font-size: 0;
   background: #ffffff;
   border-radius: 10px;
+  overflow: hidden;
   padding-bottom: 25px;
 }

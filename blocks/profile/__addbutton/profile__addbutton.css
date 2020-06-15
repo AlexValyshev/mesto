@@ -6,6 +6,9 @@
   box-sizing: border-box;
   border-radius: 2px;
   background: transparent;
+  background-image: url('./../../../images/plus.svg');
+  background-position: center;
+  background-repeat: no-repeat;
   align-self: center;
   margin-left: auto;
   position: relative;

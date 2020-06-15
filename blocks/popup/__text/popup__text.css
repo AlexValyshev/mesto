@@ -37,14 +37,3 @@
   color: rgba(19, 39, 67, 0.5);
 }
 
-@media screen and (min-width: 1440px) {
-  .popup__text {
-    font-size: 20px;
-    line-height: 24px;
-  }
-
-  .popup__text::placeholder {
-    font-size: 20px;
-    line-height: 24px;
-  }
-}

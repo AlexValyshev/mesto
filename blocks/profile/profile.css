@@ -3,10 +3,8 @@
 @import url(./__name-container/profile__name-container.css);
 @import url(./__name/profile__name.css);
 @import url(./__editbutton/profile__editbutton.css);
-@import url(./__image-pencil/profile__image-pencil.css);
 @import url(./__job/profile__job.css);
 @import url(./__addbutton/profile__addbutton.css);
-@import url(./__image-plus/profile__image-plus.css);
 
 .profile {
   display: flex;

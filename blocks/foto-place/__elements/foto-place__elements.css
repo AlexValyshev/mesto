@@ -9,24 +9,3 @@
   grid-row-gap: 20px;
 }
 
-  @media screen and (min-width: 1281px) {
-  .foto-place__elements {
-    grid-template-columns: repeat(3, minmax(282px, 1fr));
-  }
-}
-
-/*@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .foto-place__elements {
-    max-width: calc(100% - 48px);
-    grid-gap: 16px;
-    padding-bottom: 88px;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .foto-place__elements {
-    max-width: calc(100% - 32px);
-    grid-gap: 12px;
-    padding-bottom: 64px;
-  }
-} */

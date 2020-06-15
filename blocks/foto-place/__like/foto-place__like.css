@@ -1,7 +1,25 @@
 .foto-place__like {
-  width: 21px;
-  height: 18px;
+  min-width: 21px;
+  height: 19px;
   align-self: center;
   margin-bottom: -1px;
   margin-right: 1px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  background-image: url('./../../../images/like.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: opacity 0.3s linear;
 }
+
+.foto-place__like:hover {
+  opacity: 0.6;
+  outline: none;
+}
+
+.foto-place__like:focus {
+  outline: none;
+}
+
