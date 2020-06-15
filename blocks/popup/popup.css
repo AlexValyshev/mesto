@@ -3,8 +3,6 @@
 @import url(./__form-heading/popup__form-heading.css);
 @import url(./__info/popup__info.css);
 @import url(./__text/popup__text.css);
-@import url(./__text/_margin/popup__text_margin_name.css);
-@import url(./__text/_margin/popup__text_margin_job.css);
 @import url(./__button/popup__button.css);
 @import url(./__close/popup__close.css);
 

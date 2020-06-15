@@ -11,8 +11,16 @@
   font-size: 14px;
   line-height: 17px;
   color: #000000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0;
+  margin-bottom: 30px;
 }
 
+.popup__text:last-child {
+  margin-bottom: 0;
+}
 .popup__text::placeholder {
   font-size: 14px;
   line-height: 17px;
