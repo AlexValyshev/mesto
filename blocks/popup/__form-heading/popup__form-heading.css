@@ -10,3 +10,11 @@
   color: #000000;
   }
 
+@media screen and (max-width: 617px) {
+  .popup__form-heading {
+    margin-bottom: 32px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
+

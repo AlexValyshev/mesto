@@ -1,10 +1,16 @@
 @import url(./__container/popup__container.css);
+@import url(./__container/_close/popup__container_close.css);
 @import url(./__form/popup__form.css);
+@import url(./__form/_opened/popup__form_opened.css);
+@import url(./__form-image/popup__form-image.css);
+@import url(./__form-image/_opened/popup__form-image_opened.css);
 @import url(./__form-heading/popup__form-heading.css);
 @import url(./__info/popup__info.css);
 @import url(./__text/popup__text.css);
 @import url(./__button/popup__button.css);
 @import url(./__close/popup__close.css);
+@import url(./__image/popup__image.css);
+@import url(./__image/_opened/popup__image_opened.css);
 
 .popup {
   width: 100%;

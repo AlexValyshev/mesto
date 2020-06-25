@@ -6,3 +6,9 @@
   font-size: 0;
   margin-bottom: 48px;
 }
+
+@media screen and (max-width: 617px) {
+  .popup__info {
+    margin-bottom: 36px;
+  }
+}

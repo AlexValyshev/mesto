@@ -4,6 +4,8 @@
 @import url(./__group/foto-place__group.css);
 @import url(./__title/foto-place__title.css);
 @import url(./__like/foto-place__like.css);
+@import url(./__like/_active/foto-place__like_active.css);
+@import url(./__trash/foto-place__trash.css);
 
 .foto-place {
   /* border: 1px solid blue; */

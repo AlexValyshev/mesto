@@ -1,0 +1,7 @@
+.popup__image {
+  display: none;
+  width: 564px;
+  height: 564px;
+  border: 1px solid red;
+  background: #ffffff;
+}
