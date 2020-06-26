@@ -1,10 +1,10 @@
-.popup__close {
-  width: 40px;
-  height: 40px;
+.popup__close-view {
+  width: 41px;
+  height: 41px;
   transform: rotate(45deg);
   position: absolute;
-  left: 100%;
-  bottom: 100%;
+  left: calc((426/430)*100%);
+  bottom: calc((326/331)*100%);
   padding: 0;
   border: none;
   background: transparent;
@@ -16,13 +16,13 @@
   transition: opacity 0.3s linear;
 }
 
-.popup__close:hover {
+.popup__close-view:hover {
   opacity: 0.6;
   outline: none;
 }
 
 @media screen and (max-width: 617px) {
-  .popup__close {
+  .popup__close-view {
     width: 30px;
     height: 30px;
   }

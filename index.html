@@ -32,54 +32,6 @@
 
       <section class="foto-place page__container">
         <ul class="foto-place__elements">
-          <!-- <li class="foto-place__element">
-            <button type="button" class="foto-place__trash"></button>
-            <img src="./images/st-peterburg.jpg" alt="Санкт-Петербург, Исакиевский собор" class="foto-place__image">
-            <div class="foto-place__group">
-              <h2 class="foto-place__title">Санкт-Петербург</h2>
-              <button type="button" class="foto-place__like"></button>
-            </div>
-          </li>
-          <li class="foto-place__element">
-            <button type="button" class="foto-place__trash"></button>
-            <img src="./images/karelia.jpg" alt="Карелия, каньоны" class="foto-place__image">
-            <div class="foto-place__group">
-              <h2 class="foto-place__title">Карелия</h2>
-              <button type="button" class="foto-place__like"></button>
-            </div>
-          </li>
-          <li class="foto-place__element">
-            <button type="button" class="foto-place__trash"></button>
-            <img src="./images/sevastopol.jpg" alt="Севастополь, вид на бухту" class="foto-place__image">
-            <div class="foto-place__group">
-              <h2 class="foto-place__title">Севастополь</h2>
-              <button type="button" class="foto-place__like"></button>
-            </div>
-          </li>
-          <li class="foto-place__element">
-            <button type="button" class="foto-place__trash"></button>
-            <img src="./images/novosibirsk.jpg" alt="Ночной Новосибирск" class="foto-place__image">
-            <div class="foto-place__group">
-              <h2 class="foto-place__title">Новосибирск</h2>
-              <button type="button" class="foto-place__like"></button>
-            </div>
-          </li>
-          <li class="foto-place__element">
-            <button type="button" class="foto-place__trash"></button>
-            <img src="./images/kamchatka.jpg" alt="Камчатка" class="foto-place__image">
-            <div class="foto-place__group">
-              <h2 class="foto-place__title">Петропавловск-Камчатский</h2>
-              <button type="button" class="foto-place__like"></button>
-            </div>
-          </li>
-          <li class="foto-place__element">
-            <button type="button" class="foto-place__trash"></button>
-            <img src="./images/sudak.jpg" alt="Судак, залив" class="foto-place__image">
-            <div class="foto-place__group">
-              <h2 class="foto-place__title">Судак</h2>
-              <button type="button" class="foto-place__like"></button>
-            </div>
-          </li> -->
         </ul>
       </section>
     </main>
@@ -116,7 +68,13 @@
         </form>
         <button type="button" class="popup__close"></button>
       </div>
-      <div class="popup__image"></div>
+      <div class="popup__container-view">
+        <figure class="popup__view">
+          <img class="popup__image" src="" alt="" />
+          <figcaption class="popup__caption"></figcaption>
+        </figure>
+        <button type="button" class="popup__close popup__close_view"></button>
+      </div>
     </section>
   </div>
   <template id="foto-place__template">

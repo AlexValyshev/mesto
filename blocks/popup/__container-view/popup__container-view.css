@@ -1,0 +1,17 @@
+.popup__container-view {
+  display: none;
+  position: relative;
+}
+
+@media screen and (min-width: 321px) and (max-width: 617px) {
+  .popup__container-view {
+    min-width: calc((240/320)*100%);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .popup__container {
+    width: 240px;
+    min-width: 220px;
+  }
+}

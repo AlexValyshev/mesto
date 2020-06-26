@@ -7,6 +7,7 @@
 @import url(../blocks/foto-place/foto-place.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/_change-background/popup__change-background.css);
 @import url(../blocks/footer/footer.css);
 
 
