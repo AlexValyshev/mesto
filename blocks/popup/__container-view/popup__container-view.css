@@ -1,6 +1,11 @@
 .popup__container-view {
-  display: none;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 1s ease-in-out;
 }
 
 @media screen and (min-width: 321px) and (max-width: 617px) {

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Проектная работа №4 Александра Валышева на Яндекс.Практикуме">
+  <meta name="description" content="Проектная работа №5 Александра Валышева на Яндекс.Практикуме">
   <meta name="keywords" content="training">
   <meta name="author" content="Александр Валышев">
   <link rel="stylesheet" href="./pages/index.css">
@@ -41,8 +41,8 @@
     </footer>
 
     <section class="popup">
-      <div class="popup__container">
-        <form name="form-user" action="#" method="post" class="popup__form">
+      <div class="popup__container popup__container_profile">
+        <form name="form-user" action="#" method="post" class="popup__form popup__form_profile">
           <h3 class="popup__form-heading">Редактировать профиль</h3>
           <fieldset class="popup__info">
             <label for="name" class="popup__label"></label>
@@ -52,25 +52,28 @@
             <input class="popup__text popup__text_job" type="text" id="job" name="job" placeholder="О себе"
               required>
           </fieldset>
-          <button class="popup__button" type="submit">Сохранить</button>
+          <button class="popup__button popup__button_save-profile" type="submit">Сохранить</button>
         </form>
-        <form name="form-user" action="#" method="post" class="popup__form-image">
+        <button type="button" class="popup__close popup__close_container-profile"></button>
+      </div>
+      <div class="popup__container popup__container_cards">
+        <form name="form-user-cards" action="#" method="post" class="popup__form popup__form_cards">
           <h3 class="popup__form-heading">Новое место</h3>
           <fieldset class="popup__info">
-            <label for="name" class="popup__label"></label>
-            <input class="popup__text popup__text_name" type="text" id="name" name="name" placeholder="Название"
+            <label for="card" class="popup__label"></label>
+            <input class="popup__text popup__card_name" type="text" id="card" name="card" placeholder="Название"
               required autocomplete="off">
-            <label for="job" class="popup__label"></label>
-            <input class="popup__text popup__text_job" type="text" id="job" name="job" placeholder="Сссылка на картинку"
+            <label for="link" class="popup__label"></label>
+            <input class="popup__text popup__card_link" type="text" id="link" name="link" placeholder="Сссылка на картинку"
               required autocomplete="off">
           </fieldset>
-          <button class="popup__button" type="submit">Сохранить</button>
+          <button class="popup__button popup__button_save-card" type="submit">Сохранить</button>
         </form>
-        <button type="button" class="popup__close"></button>
+        <button type="button" class="popup__close popup__close_container-cards"></button>
       </div>
       <div class="popup__container-view">
         <figure class="popup__view">
-          <img class="popup__image" src="" alt="" />
+          <img class="popup__image" src="#" alt="" />
           <figcaption class="popup__caption"></figcaption>
         </figure>
         <button type="button" class="popup__close popup__close_view"></button>

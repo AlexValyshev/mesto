@@ -1,9 +1,6 @@
 @import url(./__container/popup__container.css);
-@import url(./__container/_close/popup__container_close.css);
+@import url(./__container/_opened/popup__container_opened.css);
 @import url(./__form/popup__form.css);
-@import url(./__form/_opened/popup__form_opened.css);
-@import url(./__form-image/popup__form-image.css);
-@import url(./__form-image/_opened/popup__form-image_opened.css);
 @import url(./__form-heading/popup__form-heading.css);
 @import url(./__info/popup__info.css);
 @import url(./__text/popup__text.css);
@@ -14,16 +11,15 @@
 @import url(./__view/popup__view.css);
 @import url(./__image/popup__image.css);
 @import url(./__caption/popup__caption.css);
-@import url(./__close-view/popup__close-view.css);
 
 .popup {
   width: 100%;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  align-items: center;
-  justify-content: center;
-  display: none;
+  background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 1s, opacity 1s ease-in-out, background-color 1s;
 }
