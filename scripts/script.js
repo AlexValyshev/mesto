@@ -14,53 +14,44 @@ const inputNameCard = formAddCards.querySelector('.popup__card_name');
 const InputLinkCard = formAddCards.querySelector('.popup__card_link');
 const popupCloseAddCards = containerAddCards.querySelector('.popup__close_container-cards');
 const cardsContainer = document.querySelector('.foto-place__elements');
-let containerViewInages = popup.querySelector('.popup__container-view');
+let containerViewImages = popup.querySelector('.popup__container-view');
 const viewImages = popup.querySelector('.popup__view');
 const popupCloseViewImages = popup.querySelector('.popup__close_view');
 
-const initialCardsName = initialCards.map(function (item) {
-  return item.name;
+initialCards.forEach(function (item) {
+  let cardName = item.name;
+  let cardlink = item.link;
+  let cardOrder = 2;
+  addCardToPage(cardName, cardlink, cardOrder);
 });
-const initialCardsImage = initialCards.map(function (image) {
-  return image.link;
-});
-
-function initialLoadCards() {
-  for (let i = initialCardsName.length - 1; i >= 0; i--) {
-    let cardName = initialCardsName[i];
-    let cardlink = initialCardsImage[i];
-    addCardToPage(cardName, cardlink);
-  }
-}
-initialLoadCards()
 
 function openClosePopup() {
   if (popup.classList.contains('popup_opened')) {
     popup.classList.remove('popup_opened');
     containerEditProfile.classList.remove('popup__container_opened');
     containerAddCards.classList.remove('popup__container_opened');
-    containerViewInages.classList.remove('popup__container-view_opened');
+    containerViewImages.classList.remove('popup__container-view_opened');
     popup.classList.remove('popup__change-background');
   } else {
     popup.classList.add('popup_opened');
   }
 }
 
-function EditProfile() {
+function editProfile() {
   openClosePopup();
   containerEditProfile.classList.add('popup__container_opened');
   inputNameProfile.value = profileName.textContent;
   inputJobProfile.value = profileJob.textContent;
 }
 
-function AddNewCards() {
+function addNewCards() {
   openClosePopup();
   containerAddCards.classList.add('popup__container_opened');
   inputNameCard.value = '';
   InputLinkCard.value = '';
 }
 
-function addCardToPage(cardName, cardlink) {
+function addCardToPage(cardName, cardlink, cardOrder) {
   const cardTemplate = document.querySelector('#foto-place__template').content;
   const cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.foto-place__image').src = cardlink;
@@ -76,12 +67,12 @@ function addCardToPage(cardName, cardlink) {
   cardElement.querySelector('.foto-place__image').addEventListener('click', function () {
     cardView(cardName, cardlink)
   });
-  cardsContainer.prepend(cardElement);
+  cardOrder === 2 ? cardsContainer.append(cardElement) : cardsContainer.prepend(cardElement);
 }
 
 function cardView(cardName, cardlink) {
   openClosePopup();
-  containerViewInages.classList.add('popup__container-view_opened');
+  containerViewImages.classList.add('popup__container-view_opened');
   popup.classList.add('popup__change-background');
   const image = viewImages.querySelector('.popup__image');
   const caption = viewImages.querySelector('.popup__caption');
@@ -102,12 +93,13 @@ function formCardsSubmitHandler(evt) {
   evt.preventDefault();
   cardName = inputNameCard.value;
   cardlink = InputLinkCard.value;
-  addCardToPage(cardName, cardlink);
+  cardOrder = 1;
+  addCardToPage(cardName, cardlink,cardOrder);
   openClosePopup();
 }
 
-profileEditButton.addEventListener('click', EditProfile);
-cardsAddButton.addEventListener('click', AddNewCards);
+profileEditButton.addEventListener('click', editProfile);
+cardsAddButton.addEventListener('click', addNewCards);
 formEditProfile.addEventListener('submit', formSubmitHandler);
 formAddCards.addEventListener('submit', formCardsSubmitHandler);
 popupCloseEditProfile.addEventListener('click', openClosePopup);
