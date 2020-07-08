@@ -41,6 +41,7 @@ function openClosePopup() {
 function editProfile() {
   openClosePopup();
   containerEditProfile.classList.add('popup__container_opened');
+  profileEditButton.blur();
   inputNameProfile.value = profileName.textContent;
   inputJobProfile.value = profileJob.textContent;
 }
@@ -48,6 +49,7 @@ function editProfile() {
 function addNewCards() {
   openClosePopup();
   containerAddCards.classList.add('popup__container_opened');
+  cardsAddButton.blur();
   inputNameCard.value = '';
   InputLinkCard.value = '';
 }
@@ -111,6 +113,7 @@ popup.addEventListener('click', function (evt) {
     openClosePopup();
   }
 });
+
 popup.addEventListener('mouseover', function (evt) {
   if (evt.target === evt.currentTarget) {
     popup.classList.add('popup_cursor');
@@ -119,6 +122,11 @@ popup.addEventListener('mouseover', function (evt) {
   }
 });
 
-formEditProfile.addEventListener('keydown', function (evt) {
-  console.log(evt); // заключите console.log в условную конструкцию
+document.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Escape') {
+    openClosePopup();
+  }
 });
+
+
+
