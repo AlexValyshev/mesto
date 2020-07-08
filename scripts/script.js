@@ -21,13 +21,14 @@ const popupCloseViewImages = popup.querySelector('.popup__close_view');
 initialCards.forEach(function (item) {
   let cardName = item.name;
   let cardlink = item.link;
-  let cardOrder = 2;
+  let cardOrder = 'append';
   addCardToPage(cardName, cardlink, cardOrder);
 });
 
 function openClosePopup() {
   if (popup.classList.contains('popup_opened')) {
     popup.classList.remove('popup_opened');
+    popup.classList.remove('popup_cursor');
     containerEditProfile.classList.remove('popup__container_opened');
     containerAddCards.classList.remove('popup__container_opened');
     containerViewImages.classList.remove('popup__container-view_opened');
@@ -67,7 +68,7 @@ function addCardToPage(cardName, cardlink, cardOrder) {
   cardElement.querySelector('.foto-place__image').addEventListener('click', function () {
     cardView(cardName, cardlink)
   });
-  cardOrder === 2 ? cardsContainer.append(cardElement) : cardsContainer.prepend(cardElement);
+  cardOrder === 'append' ? cardsContainer.append(cardElement) : cardsContainer.prepend(cardElement);
 }
 
 function cardView(cardName, cardlink) {
@@ -93,7 +94,7 @@ function formCardsSubmitHandler(evt) {
   evt.preventDefault();
   cardName = inputNameCard.value;
   cardlink = InputLinkCard.value;
-  cardOrder = 1;
+  cardOrder = 'perpend';
   addCardToPage(cardName, cardlink,cardOrder);
   openClosePopup();
 }
@@ -105,3 +106,19 @@ formAddCards.addEventListener('submit', formCardsSubmitHandler);
 popupCloseEditProfile.addEventListener('click', openClosePopup);
 popupCloseAddCards.addEventListener('click', openClosePopup);
 popupCloseViewImages.addEventListener('click', openClosePopup);
+popup.addEventListener('click', function (evt) {
+  if (evt.target === evt.currentTarget) {
+    openClosePopup();
+  }
+});
+popup.addEventListener('mouseover', function (evt) {
+  if (evt.target === evt.currentTarget) {
+    popup.classList.add('popup_cursor');
+  } else {
+    popup.classList.remove('popup_cursor');
+  }
+});
+
+formEditProfile.addEventListener('keydown', function (evt) {
+  console.log(evt); // заключите console.log в условную конструкцию
+});

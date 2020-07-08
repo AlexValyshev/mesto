@@ -6,4 +6,6 @@
   overflow: hidden;
   padding-bottom: 25px;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
