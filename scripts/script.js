@@ -17,49 +17,60 @@ const cardsContainer = document.querySelector('.foto-place__elements');
 let containerViewImages = popup.querySelector('.popup__container-view');
 const viewImages = popup.querySelector('.popup__view');
 const popupCloseViewImages = popup.querySelector('.popup__close_view');
+let containerPopup = popup.querySelectorAll('.popup__container');
 
-initialCards.forEach(function (item) {
-  let cardName = item.name;
-  let cardlink = item.link;
+initialCards.forEach(function (card) {
   let cardOrder = 'append';
-  addCardToPage(cardName, cardlink, cardOrder);
+  addCardToPage(card, cardOrder);
 });
 
-function openClosePopup() {
-  if (popup.classList.contains('popup_opened')) {
-    popup.classList.remove('popup_opened');
-    popup.classList.remove('popup_cursor');
-    containerEditProfile.classList.remove('popup__container_opened');
-    containerAddCards.classList.remove('popup__container_opened');
-    containerViewImages.classList.remove('popup__container-view_opened');
-    popup.classList.remove('popup__change-background');
-  } else {
-    popup.classList.add('popup_opened');
+// Фунция закрытия попапа при нажатии на кнопку "Esc".
+function closePopupButtonEsc(evt) {
+  if (evt.key === 'Escape') {
+    findOpenContainer();
   }
 }
 
+// Функция поиска открытого контейнера (всего их три).
+const findOpenContainer = () => {
+  containerPopup.forEach(element => {
+    if (element.classList.contains('popup__container_opened')) {
+      openClosePopup(element);
+    }
+  });
+}
+
+function openClosePopup(element) {
+  if (popup.classList.contains('popup_opened')) {
+    popup.classList.remove('popup_cursor');
+    popup.classList.remove('popup__change-background');
+    document.removeEventListener('keydown', closePopupButtonEsc); // Удаляем слушатель с кнопки "Esc", при закрытии попапа.
+  }
+  popup.classList.toggle('popup_opened');
+  element.classList.toggle('popup__container_opened');
+  document.addEventListener('keydown', closePopupButtonEsc); // Устанавливаем слушатель на кнопку "Esc", при открытии попапа.
+}
+
 function editProfile() {
-  openClosePopup();
-  containerEditProfile.classList.add('popup__container_opened');
+  openClosePopup(containerEditProfile);
   profileEditButton.blur();
   inputNameProfile.value = profileName.textContent;
   inputJobProfile.value = profileJob.textContent;
 }
 
 function addNewCards() {
-  openClosePopup();
-  containerAddCards.classList.add('popup__container_opened');
+  openClosePopup(containerAddCards);
   cardsAddButton.blur();
   inputNameCard.value = '';
   InputLinkCard.value = '';
 }
 
-function addCardToPage(cardName, cardlink, cardOrder) {
+function addCardToPage(card, cardOrder) {
   const cardTemplate = document.querySelector('#foto-place__template').content;
   const cardElement = cardTemplate.cloneNode(true);
-  cardElement.querySelector('.foto-place__image').src = cardlink;
-  cardElement.querySelector('.foto-place__title').textContent = cardName;
-  cardElement.querySelector('.foto-place__image').alt = cardName;
+  cardElement.querySelector('.foto-place__image').src = card.link;
+  cardElement.querySelector('.foto-place__title').textContent = card.name;
+  cardElement.querySelector('.foto-place__image').alt = card.name;
   cardElement.querySelector('.foto-place__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('foto-place__like_active');
   });
@@ -67,21 +78,20 @@ function addCardToPage(cardName, cardlink, cardOrder) {
     const card = evt.target.closest('.foto-place__element');
     card.remove();
   });
-  cardElement.querySelector('.foto-place__image').addEventListener('click', function () {
-    cardView(cardName, cardlink)
+  cardElement.querySelector('.foto-place__image').addEventListener('click', () => {
+    cardView(card);
   });
   cardOrder === 'append' ? cardsContainer.append(cardElement) : cardsContainer.prepend(cardElement);
 }
 
-function cardView(cardName, cardlink) {
-  openClosePopup();
-  containerViewImages.classList.add('popup__container-view_opened');
+function cardView(card) {
+  openClosePopup(containerViewImages);
   popup.classList.add('popup__change-background');
   const image = viewImages.querySelector('.popup__image');
   const caption = viewImages.querySelector('.popup__caption');
-  image.src = cardlink;
-  caption.textContent = cardName;
-  image.alt = cardName;
+  image.src = card.link;
+  caption.textContent = card.name;
+  image.alt = card.name;
   viewImages.append(image, caption);
 }
 
@@ -89,44 +99,41 @@ function formSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = inputNameProfile.value;
   profileJob.textContent = inputJobProfile.value;
-  openClosePopup();
+  findOpenContainer();
 }
 
 function formCardsSubmitHandler(evt) {
   evt.preventDefault();
-  cardName = inputNameCard.value;
-  cardlink = InputLinkCard.value;
-  cardOrder = 'perpend';
-  addCardToPage(cardName, cardlink,cardOrder);
-  openClosePopup();
+  let newCard = {};
+  newCard.name = inputNameCard.value;
+  newCard.link = InputLinkCard.value;
+  let cardOrder = 'perpend';
+  addCardToPage(newCard, cardOrder);
+  findOpenContainer();
+}
+
+// Фунция закрытия попапа при "клике" в зоне "оверлей".
+const closePopapInAreaOverlay = (evt) => {
+  if (evt.target === evt.currentTarget) {
+    findOpenContainer();
+  }
+}
+
+// Фунция поведения "cursor pointer" в зоне "оверлей" попапа.
+const delCursorPointer = (evt) => {
+  if (evt.target !== evt.currentTarget) {
+    popup.classList.add('popup_cursor');
+  } else {
+    popup.classList.remove('popup_cursor');
+  }
 }
 
 profileEditButton.addEventListener('click', editProfile);
 cardsAddButton.addEventListener('click', addNewCards);
 formEditProfile.addEventListener('submit', formSubmitHandler);
 formAddCards.addEventListener('submit', formCardsSubmitHandler);
-popupCloseEditProfile.addEventListener('click', openClosePopup);
-popupCloseAddCards.addEventListener('click', openClosePopup);
-popupCloseViewImages.addEventListener('click', openClosePopup);
-popup.addEventListener('click', function (evt) {
-  if (evt.target === evt.currentTarget) {
-    openClosePopup();
-  }
-});
-
-popup.addEventListener('mouseover', function (evt) {
-  if (evt.target === evt.currentTarget) {
-    popup.classList.add('popup_cursor');
-  } else {
-    popup.classList.remove('popup_cursor');
-  }
-});
-
-document.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Escape') {
-    openClosePopup();
-  }
-});
-
-
-
+popupCloseEditProfile.addEventListener('click', findOpenContainer);
+popupCloseAddCards.addEventListener('click', findOpenContainer);
+popupCloseViewImages.addEventListener('click', findOpenContainer);
+popup.addEventListener('click', closePopapInAreaOverlay); // Устанавливаем слушатель на зону "оверлей".
+popup.addEventListener('mouseover', delCursorPointer); // Устанавливаем слушатель для мыши  в зоне "оверлей".
