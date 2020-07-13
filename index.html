@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Проектная работа №5 Александра Валышева на Яндекс.Практикуме">
+  <meta name="description" content="Проектная работа №6 Александра Валышева на Яндекс.Практикуме">
   <meta name="keywords" content="training">
   <meta name="author" content="Александр Валышев">
   <link rel="stylesheet" href="./pages/index.css">
@@ -42,30 +42,34 @@
 
     <section class="popup">
       <div class="popup__container popup__container-form popup__container_profile">
-        <form name="form-user" action="#" method="post" class="popup__form popup__form_profile">
+        <form name="form-user" action="#" method="post" class="popup__form popup__form_profile" novalidate>
           <h3 class="popup__form-heading">Редактировать профиль</h3>
           <fieldset class="popup__info">
             <label for="name" class="popup__label"></label>
-            <input class="popup__text popup__text_name" type="text" id="name" name="name" placeholder="Имя"
-              required>
+            <input class="popup__input popup__input_name" type="text" id="name-input" name="name" placeholder="Имя"
+              minlength="2" maxlength="40" required>
+            <span id="name-input-error" class="popup__error"></span>
             <label for="job" class="popup__label"></label>
-            <input class="popup__text popup__text_job" type="text" id="job" name="job" placeholder="О себе"
-              required>
+            <input class="popup__input popup__input_job" type="text" id="job-input" name="job" placeholder="О себе"
+              minlength="2" maxlength="200" required>
+            <span id="job-input-error" class="popup__error"></span>
           </fieldset>
           <button class="popup__button popup__button_save-profile" type="submit">Сохранить</button>
         </form>
         <button type="button" class="popup__close popup__close_container-profile"></button>
       </div>
       <div class="popup__container popup__container-form popup__container_cards">
-        <form name="form-cards" action="#" method="post" class="popup__form popup__form_cards">
+        <form name="form-cards" action="#" method="post" class="popup__form popup__form_cards" novalidate>
           <h3 class="popup__form-heading">Новое место</h3>
           <fieldset class="popup__info">
             <label for="card" class="popup__label"></label>
-            <input class="popup__text popup__card_name" type="text" id="card" name="card" placeholder="Название"
-              required autocomplete="off">
+            <input class="popup__input popup__input_card-name" type="text" id="card-input" name="card" placeholder="Название"
+              minlength="1" maxlength="30" required>
+            <span id="card-input-error" class="popup__error"></span>
             <label for="link" class="popup__label"></label>
-            <input class="popup__text popup__card_link" type="text" id="link" name="link" placeholder="Сссылка на картинку"
-              required autocomplete="off">
+            <input class="popup__input popup__input_link" type="url" id="link-input" name="link"
+              placeholder="Сссылка на картинку" required>
+            <span id="link-input-error" class="popup__error"></span>
           </fieldset>
           <button class="popup__button popup__button_save-card" type="submit">Сохранить</button>
         </form>
@@ -92,6 +96,7 @@
   </template>
   <script src="./scripts/dataset.js" type="text/javascript"></script>
   <script src="./scripts/script.js" type="text/javascript"></script>
+  <script src="./scripts/validate.js" type="text/javascript"></script>
 </body>
 
 </html>

@@ -1,18 +1,23 @@
 let popup = document.querySelector('.popup');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
+
 const profileEditButton = document.querySelector('.profile__editbutton');
 let containerEditProfile = popup.querySelector('.popup__container_profile');
 const formEditProfile = containerEditProfile.querySelector('.popup__form_profile');
-const inputNameProfile = formEditProfile.querySelector('.popup__text_name');
-const inputJobProfile = formEditProfile.querySelector('.popup__text_job');
+const inputNameProfile = formEditProfile.querySelector('.popup__input_name');
+const inputJobProfile = formEditProfile.querySelector('.popup__input_job');
 const popupCloseEditProfile = containerEditProfile.querySelector('.popup__close_container-profile');
+const editProfileSubmitButton = formEditProfile.querySelector('.popup__button_save-profile');
+
 const cardsAddButton = document.querySelector('.profile__addbutton');
 let containerAddCards = popup.querySelector('.popup__container_cards');
 const formAddCards = containerAddCards.querySelector('.popup__form_cards');
-const inputNameCard = formAddCards.querySelector('.popup__card_name');
-const InputLinkCard = formAddCards.querySelector('.popup__card_link');
+const inputNameCard = formAddCards.querySelector('.popup__input_card-name');
+const InputLinkCard = formAddCards.querySelector('.popup__input_link');
 const popupCloseAddCards = containerAddCards.querySelector('.popup__close_container-cards');
+const addCardsSubmitButton = formAddCards.querySelector('.popup__button_save-card');
+
 const cardsContainer = document.querySelector('.foto-place__elements');
 let containerViewImages = popup.querySelector('.popup__container-view');
 const viewImages = popup.querySelector('.popup__view');
@@ -40,6 +45,22 @@ const findOpenContainer = () => {
   });
 }
 
+// Фунция закрытия попапа при "клике" в зоне "оверлей".
+const closePopapInAreaOverlay = (evt) => {
+  if (evt.target === evt.currentTarget) {
+    findOpenContainer();
+  }
+}
+
+// Фунция поведения "cursor pointer" в зоне "оверлей" попапа.
+const delCursorPointer = (evt) => {
+  if (evt.target !== evt.currentTarget) {
+    popup.classList.add('popup_cursor');
+  } else {
+    popup.classList.remove('popup_cursor');
+  }
+}
+
 function openClosePopup(element) {
   if (popup.classList.contains('popup_opened')) {
     popup.classList.remove('popup_cursor');
@@ -53,6 +74,9 @@ function openClosePopup(element) {
 
 function editProfile() {
   openClosePopup(containerEditProfile);
+  clearingFormFromError(formEditProfile);
+  editProfileSubmitButton.removeAttribute('disabled');
+  editProfileSubmitButton.classList.remove('popup__button_disabled');
   profileEditButton.blur();
   inputNameProfile.value = profileName.textContent;
   inputJobProfile.value = profileJob.textContent;
@@ -60,6 +84,9 @@ function editProfile() {
 
 function addNewCards() {
   openClosePopup(containerAddCards);
+  clearingFormFromError(formAddCards);
+  addCardsSubmitButton.setAttribute('disabled', true);
+  addCardsSubmitButton.classList.add('popup__button_disabled');
   cardsAddButton.blur();
   inputNameCard.value = '';
   InputLinkCard.value = '';
@@ -112,20 +139,17 @@ function formCardsSubmitHandler(evt) {
   findOpenContainer();
 }
 
-// Фунция закрытия попапа при "клике" в зоне "оверлей".
-const closePopapInAreaOverlay = (evt) => {
-  if (evt.target === evt.currentTarget) {
-    findOpenContainer();
-  }
-}
-
-// Фунция поведения "cursor pointer" в зоне "оверлей" попапа.
-const delCursorPointer = (evt) => {
-  if (evt.target !== evt.currentTarget) {
-    popup.classList.add('popup_cursor');
-  } else {
-    popup.classList.remove('popup_cursor');
-  }
+// функция очистки форм от ошибок если при их наличии происходит закрытие попапа нажатием на "Esc", "Оверлей" или "Крестик".
+const clearingFormFromError = (element) => {
+  const inputs = Array.from(element.querySelectorAll('.popup__input'));
+  const spans = Array.from(element.querySelectorAll('.popup__error'));
+  inputs.forEach(function (input) {
+    input.classList.remove('popup__input_type_error');
+  });
+  spans.forEach(function (span) {
+    span.classList.remove('popup__error_visible');
+    span.textContent = '';
+  });
 }
 
 profileEditButton.addEventListener('click', editProfile);
