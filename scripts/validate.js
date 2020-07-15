@@ -1,4 +1,4 @@
-enableValidation({
+const validationConfig = ({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -33,14 +33,14 @@ function setEventListeners (form, inputSelector, submitButtonSelector, inactiveB
 // Функция валидации полей формы.
 const checkInputValidity = (form, input, inputErrorClass, errorClass) => {
   if (!input.validity.valid) {
-    addError(form, input, input.validationMessage, inputErrorClass, errorClass);
+    showInputError(form, input, input.validationMessage, inputErrorClass, errorClass);
   } else {
-    removeError(form, input, inputErrorClass, errorClass);
+    hideInputError(form, input, inputErrorClass, errorClass);
   }
 };
 
 // Функция добавления и стилизации ошибки, при невалидности поля формы.
-const addError = (form, input, errorMessage, inputErrorClass, errorClass) => {
+const showInputError = (form, input, errorMessage, inputErrorClass, errorClass) => {
   const inputError = form.querySelector(`#${input.id}-error`);
   input.classList.add(inputErrorClass);
   inputError.textContent = errorMessage;
@@ -48,7 +48,7 @@ const addError = (form, input, errorMessage, inputErrorClass, errorClass) => {
 };
 
 // Функция удаления стилизации и ошибки, при валидности поля формы.
-function removeError (form, input, inputErrorClass, errorClass) {
+function hideInputError (form, input, inputErrorClass, errorClass) {
   const inputError = form.querySelector(`#${input.id}-error`);
   input.classList.remove(inputErrorClass);
   inputError.classList.remove(errorClass);
@@ -71,6 +71,18 @@ const  containsInvalidInput =(allInput) => {
   return allInput.some((input) => {
   return !input.validity.valid;
 });
+}
+
+enableValidation(validationConfig);
+
+// функция очистки форм от ошибок если при их наличии происходит закрытие попапа нажатием на "Esc", "Оверлей" или "Крестик".
+const clearingFormFromError = (element, validationConfig) => {
+  const inputs = Array.from(element.querySelectorAll(validationConfig.inputSelector));
+  const button = element.querySelector(validationConfig.submitButtonSelector);
+  inputs.forEach((input) => {
+    hideInputError (element, input, validationConfig.inputErrorClass, validationConfig.errorClass)
+    toggleSubmitButton(inputs, button, validationConfig.inactiveButtonClass);
+  });
 }
 
 

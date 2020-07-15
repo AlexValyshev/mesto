@@ -4,7 +4,7 @@
 @import url(../blocks/header/header.css);
 @import url(../blocks/content/content.css);
 @import url(../blocks/profile/profile.css);
-@import url(../blocks/foto-place/foto-place.css);
+@import url(../blocks/photo-place/photo-place.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/_change-background/popup__change-background.css);

@@ -1,4 +1,4 @@
-.foto-place__like {
+.photo-place__like {
   min-width: 21px;
   height: 19px;
   align-self: center;
@@ -14,12 +14,12 @@
   transition: opacity 0.3s linear;
 }
 
-.foto-place__like:hover {
+.photo-place__like:hover {
   opacity: 0.6;
   outline: none;
 }
 
-.foto-place__like:focus {
+.photo-place__like:focus {
   outline: none;
 }
 

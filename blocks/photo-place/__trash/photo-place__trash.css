@@ -1,4 +1,4 @@
-.foto-place__trash {
+.photo-place__trash {
   min-width: 18px;
   height: 19px;
   padding: 0;
@@ -14,11 +14,11 @@
   right: 15px;
 }
 
-.foto-place__trash:hover {
+.photo-place__trash:hover {
   opacity: 0.6;
   outline: none;
 }
 
-.foto-place__trash:focus {
+.photo-place__trash:focus {
   outline: none;
 }
