@@ -21,21 +21,33 @@ const addCardsSubmitButton = formAddCards.querySelector('.popup__button_save-car
 const cardsContainer = document.querySelector('.photo-place__elements');
 const containerPopup = popup.querySelectorAll('.popup__container');
 
-creatingCardInstance(initialCards); // Первоначальное создание карточек
-
 // Функция создания экземпляра карточки
-function creatingCardInstance(array) {
+function creatingCardInstance(item) {
+  const card = new Card(item, '#photo-place__template');
+  const cardElement = card.generateCard();
+  return cardElement;
+}
+
+// Функция первоначальной загрузки карточек
+function loadCards(array) {
   array.forEach(function (item) {
-    const card = new Card(item, '#photo-place__template')
-    const cardElement = card.generateCard();
+    const element = creatingCardInstance(item);
     const cardOrder = (array === initialCards) ? true : false;
-    renderCard(cardElement, cardOrder);
+    renderCard(element, cardOrder);
   });
 }
 
 // Функция добавления карточки в разметку
-function renderCard(cardElement, cardOrder) {
-  cardOrder ? cardsContainer.append(cardElement) : cardsContainer.prepend(cardElement);
+function renderCard(element, cardOrder) {
+  cardOrder ? cardsContainer.append(element) : cardsContainer.prepend(element);
+}
+
+loadCards(initialCards);
+
+// Функция создания экземпляра класса, для проверяемой формы
+function creatingFormInstance(validationConfig, form) {
+  const formForValidation = new FormValidator(validationConfig, form);
+  formForValidation.enableValidation();
 }
 
 // Фунция закрытия попапа при нажатии на кнопку "Esc".
@@ -103,7 +115,7 @@ function formCardsSubmitHandler(evt) {
     {name: inputNameCard.value,
     link: InputLinkCard.value}
   ];
-  creatingCardInstance(newCard);
+  loadCards(newCard);
   findOpenContainer();
 }
 

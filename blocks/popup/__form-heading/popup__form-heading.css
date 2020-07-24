@@ -10,7 +10,7 @@
   color: #000000;
   }
 
-@media screen and (max-width: 617px) {
+@media screen and (max-width: 510px) {
   .popup__form-heading {
     margin-bottom: 32px;
     font-size: 18px;

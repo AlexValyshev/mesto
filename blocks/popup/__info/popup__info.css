@@ -7,7 +7,7 @@
   margin-bottom: 28px;
 }
 
-@media screen and (max-width: 617px) {
+@media screen and (max-width: 510px) {
   .popup__info {
     margin-bottom: 18px;
   }

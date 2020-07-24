@@ -19,35 +19,31 @@ class FormValidator {
 
   // Функция валидации формы
   enableValidation() {
-
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
-    this._setEventListeners();
+    this._clearingFormFromError();
   }
 
   // функция очистки форм от ошибок если при их наличии происходит закрытие попапа нажатием на "Esc", "Оверлей" или "Крестик".
-  clearingFormFromError() {
+  _clearingFormFromError() {
     this._allInput = Array.from(this._form.querySelectorAll(this._inputSelector));
     this._button = this._form.querySelector(this._submitButtonSelector);
     this._allInput.forEach((input) => {
       this._input = input;
       this._hideInputError();
       this._toggleSubmitButton();
+      this._setEventListeners(input);
     });
   }
 
-  // Функция поиска всех полей и кнопок в форме и их обработка.
-  _setEventListeners() {
-    // this._allInput = Array.from(this._form.querySelectorAll(this._inputSelector));
-    // this._button = this._form.querySelector(this._submitButtonSelector);
-    this._allInput.forEach((input) => {
+  // Функция установки слушателей на все поля в форме.
+  _setEventListeners(input) {
       input.addEventListener('input', () => {
         this._input = input;
         this._checkInputValidity();
         this._toggleSubmitButton();
       });
-    });
   }
 
   // Функция валидации полей формы.
@@ -68,7 +64,7 @@ class FormValidator {
   };
 
   // Функция удаления стилизации и ошибки, при валидности поля формы.
-  _hideInputError() {
+  _hideInputError = () => {
     const inputError = this._form.querySelector(`#${this._input.id}-error`);
     this._input.classList.remove(this._inputErrorClass);
     inputError.classList.remove(this._errorClass);
@@ -94,23 +90,7 @@ class FormValidator {
   }
 }
 
-// функция очистки форм от ошибок если при их наличии происходит закрытие попапа нажатием на "Esc", "Оверлей" или "Крестик".
-// const clearingFormFromError = (validationConfig, form) => {
-//   const inputs = Array.from(form.querySelectorAll(validationConfig.inputSelector));
-//   inputs.forEach((input) => {
-//     const inputError = form.querySelector(`#${input.id}-error`);
-//     input.classList.remove(inputErrorClass);
-//     inputError.classList.remove(errorClass);
-//     inputError.textContent = '';
-//   });
-// }
 
-// Функция создания экземпляра класса FormValidator для проверяемой формы
-function creatingFormInstance(validationConfig, form) {
-  const formForValidation = new FormValidator(validationConfig, form);
-  formForValidation.clearingFormFromError()
-    formForValidation.enableValidation();
-}
 
 
 
