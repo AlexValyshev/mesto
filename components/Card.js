@@ -1,4 +1,5 @@
-import {findOpenContainer, openPopup, popup} from '../scripts/script.js';
+import { popup }  from '../scripts/script.js';
+import { findOpenContainer, openPopup } from '../utils/utils.js';
 
 const containerViewImages = document.querySelector('.popup__container-view');
 const popupImage = containerViewImages.querySelector('.popup__image');

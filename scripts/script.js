@@ -1,6 +1,7 @@
-import { initialCards } from '../utils/constants.js';
+import { initialCards, validationConfig } from '../utils/constants.js';
+import { openPopup, closePopapInAreaOverlay, findOpenContainer  } from '../utils/utils.js';
 import Card from '../components/Card.js';
-import {validationConfig, FormValidator} from '../components/FormValidator.js';
+import FormValidator from '../components/FormValidator.js';
 
 export const popup = document.querySelector('.popup');
 const profileName = document.querySelector('.profile__name');
@@ -12,7 +13,6 @@ const formEditProfile = containerEditProfile.querySelector('.popup__form_profile
 const inputNameProfile = formEditProfile.querySelector('.popup__input_name');
 const inputJobProfile = formEditProfile.querySelector('.popup__input_job');
 const popupCloseEditProfile = containerEditProfile.querySelector('.popup__close_container-profile');
-const editProfileSubmitButton = formEditProfile.querySelector('.popup__button_save-profile');
 
 const cardsAddButton = document.querySelector('.profile__addbutton');
 const containerAddCards = popup.querySelector('.popup__container_cards');
@@ -20,10 +20,9 @@ const formAddCards = containerAddCards.querySelector('.popup__form_cards');
 const inputNameCard = formAddCards.querySelector('.popup__input_card-name');
 const InputLinkCard = formAddCards.querySelector('.popup__input_link');
 const popupCloseAddCards = containerAddCards.querySelector('.popup__close_container-cards');
-const addCardsSubmitButton = formAddCards.querySelector('.popup__button_save-card');
 
 const cardsContainer = document.querySelector('.photo-place__elements');
-const containerPopup = popup.querySelectorAll('.popup__container');
+export const containerPopup = popup.querySelectorAll('.popup__container');
 
 // Функция создания экземпляра карточки
 function creatingCardInstance(item) {
@@ -54,48 +53,12 @@ function creatingFormInstance(validationConfig, form) {
   formForValidation.enableValidation();
 }
 
-// Фунция закрытия попапа при нажатии на кнопку "Esc".
-function closePopupButtonEsc(evt) {
-  if (evt.key === 'Escape') {
-    findOpenContainer();
-  }
-}
-
-// Функция поиска открытого контейнера (всего их три).
-export function findOpenContainer() {
-  containerPopup.forEach(element => {
-    if (element.classList.contains('popup__container_opened')) {
-      closePopup(element);
-    }
-  });
-}
-
-// Фунция закрытия попапа при "клике" в зоне "оверлей".
-const closePopapInAreaOverlay = (evt) => {
-  if (evt.target === evt.currentTarget) {
-    findOpenContainer();
-  }
-}
-
-export function openPopup(element) {
-  popup.classList.add('popup_opened');
-  element.classList.add('popup__container_opened');
-  document.addEventListener('keydown', closePopupButtonEsc); // Устанавливаем слушатель на кнопку "Esc", при открытии попапа.
-}
-
-function closePopup(element) {
-  popup.classList.remove('popup__change-background');
-  document.removeEventListener('keydown', closePopupButtonEsc); // Удаляем слушатель с кнопки "Esc", при закрытии попапа.
-  popup.classList.remove('popup_opened');
-  element.classList.remove('popup__container_opened');
-}
-
 function editProfile() {
   openPopup(containerEditProfile);
   profileEditButton.blur();
   inputNameProfile.value = profileName.textContent;
   inputJobProfile.value = profileJob.textContent;
-  creatingFormInstance(validationConfig, formEditProfile);
+  creatingFormInstance(validationConfig, formEditProfile); //Запуск валидации формы
 }
 
 function addNewCards() {
@@ -103,7 +66,7 @@ function addNewCards() {
   cardsAddButton.blur();
   inputNameCard.value = '';
   InputLinkCard.value = '';
-  creatingFormInstance(validationConfig, formAddCards);
+  creatingFormInstance(validationConfig, formAddCards); //Запуск валидации формы
 }
 
 function formSubmitHandler(evt) {

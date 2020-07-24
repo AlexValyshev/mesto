@@ -1,13 +1,4 @@
-export const validationConfig = ({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-});
-
-export class FormValidator {
+export default class FormValidator {
   constructor(data, form) {
     this._form = form;
     this._inputSelector = data.inputSelector;
@@ -26,7 +17,7 @@ export class FormValidator {
   }
 
   // функция очистки форм от ошибок если при их наличии происходит закрытие попапа нажатием на "Esc", "Оверлей" или "Крестик".
-  _clearingFormFromError() {
+  _clearingFormFromError = () => {
     this._allInput = Array.from(this._form.querySelectorAll(this._inputSelector));
     this._button = this._form.querySelector(this._submitButtonSelector);
     this._allInput.forEach((input) => {
@@ -38,12 +29,12 @@ export class FormValidator {
   }
 
   // Функция установки слушателей на все поля в форме.
-  _setEventListeners(input) {
-      input.addEventListener('input', () => {
-        this._input = input;
-        this._checkInputValidity();
-        this._toggleSubmitButton();
-      });
+  _setEventListeners = (input) => {
+    input.addEventListener('input', () => {
+      this._input = input;
+      this._checkInputValidity();
+      this._toggleSubmitButton();
+    });
   }
 
   // Функция валидации полей формы.
