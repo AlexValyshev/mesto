@@ -1,4 +1,8 @@
-const popup = document.querySelector('.popup');
+import { initialCards } from '../utils/constants.js';
+import Card from '../components/Card.js';
+import {validationConfig, FormValidator} from '../components/FormValidator.js';
+
+export const popup = document.querySelector('.popup');
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
@@ -58,7 +62,7 @@ function closePopupButtonEsc(evt) {
 }
 
 // Функция поиска открытого контейнера (всего их три).
-function findOpenContainer() {
+export function findOpenContainer() {
   containerPopup.forEach(element => {
     if (element.classList.contains('popup__container_opened')) {
       closePopup(element);
@@ -73,7 +77,7 @@ const closePopapInAreaOverlay = (evt) => {
   }
 }
 
-function openPopup(element) {
+export function openPopup(element) {
   popup.classList.add('popup_opened');
   element.classList.add('popup__container_opened');
   document.addEventListener('keydown', closePopupButtonEsc); // Устанавливаем слушатель на кнопку "Esc", при открытии попапа.

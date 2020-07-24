@@ -1,34 +1,11 @@
-const initialCards = [{
-  name: 'Архыз',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-},
-{
-  name: 'Челябинская область',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-},
-{
-  name: 'Иваново',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-},
-{
-  name: 'Камчатка',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-},
-{
-  name: 'Холмогорский район',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-},
-{
-  name: 'Байкал',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }];
+import {findOpenContainer, openPopup, popup} from '../scripts/script.js';
 
 const containerViewImages = document.querySelector('.popup__container-view');
 const popupImage = containerViewImages.querySelector('.popup__image');
 const popupCaption = containerViewImages.querySelector('.popup__caption');
 const popupCloseViewImages = containerViewImages.querySelector('.popup__close_view');
 
-class Card {
+export default class Card {
   constructor(data, cardSelector) {
     this._name = data.name;
 		this._link = data.link;

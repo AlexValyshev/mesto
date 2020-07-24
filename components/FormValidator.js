@@ -1,4 +1,4 @@
-const validationConfig = ({
+export const validationConfig = ({
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
@@ -7,7 +7,7 @@ const validationConfig = ({
   errorClass: 'popup__error_visible'
 });
 
-class FormValidator {
+export class FormValidator {
   constructor(data, form) {
     this._form = form;
     this._inputSelector = data.inputSelector;
@@ -89,6 +89,8 @@ class FormValidator {
     });
   }
 }
+
+
 
 
 
