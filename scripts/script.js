@@ -19,16 +19,24 @@ const popupCloseAddCards = containerAddCards.querySelector('.popup__close_contai
 const addCardsSubmitButton = formAddCards.querySelector('.popup__button_save-card');
 
 const cardsContainer = document.querySelector('.photo-place__elements');
-const containerViewImages = popup.querySelector('.popup__container-view');
-const viewImages = popup.querySelector('.popup__view');
-const popupCloseViewImages = popup.querySelector('.popup__close_view');
 const containerPopup = popup.querySelectorAll('.popup__container');
-const cardTemplate = document.querySelector('#photo-place__template').content;
 
-initialCards.forEach(function (card) {
-  let cardOrder = true;
-  renderCard(card, cardOrder);
-});
+creatingCardInstance(initialCards); // Первоначальное создание карточек
+
+// Функция создания экземпляра карточки
+function creatingCardInstance(array) {
+  array.forEach(function (item) {
+    const card = new Card(item, '#photo-place__template')
+    const cardElement = card.generateCard();
+    const cardOrder = (array === initialCards) ? true : false;
+    renderCard(cardElement, cardOrder);
+  });
+}
+
+// Функция добавления карточки в разметку
+function renderCard(cardElement, cardOrder) {
+  cardOrder ? cardsContainer.append(cardElement) : cardsContainer.prepend(cardElement);
+}
 
 // Фунция закрытия попапа при нажатии на кнопку "Esc".
 function closePopupButtonEsc(evt) {
@@ -38,7 +46,7 @@ function closePopupButtonEsc(evt) {
 }
 
 // Функция поиска открытого контейнера (всего их три).
-const findOpenContainer = () => {
+function findOpenContainer() {
   containerPopup.forEach(element => {
     if (element.classList.contains('popup__container_opened')) {
       closePopup(element);
@@ -71,7 +79,7 @@ function editProfile() {
   profileEditButton.blur();
   inputNameProfile.value = profileName.textContent;
   inputJobProfile.value = profileJob.textContent;
-  clearingFormFromError(formEditProfile, validationConfig);
+  creatingFormInstance(validationConfig, formEditProfile);
 }
 
 function addNewCards() {
@@ -79,53 +87,7 @@ function addNewCards() {
   cardsAddButton.blur();
   inputNameCard.value = '';
   InputLinkCard.value = '';
-  clearingFormFromError(formAddCards, validationConfig);
-}
-
-function addCard(card) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImage = cardElement.querySelector('.photo-place__image');
-  cardImage.src = card.link;
-  cardImage.alt = card.name;
-  cardElement.querySelector('.photo-place__title').textContent = card.name;
-  addEventListenersForCard(card, cardElement, cardImage);
-  return cardElement;
-}
-
-// Функция переключения лайка для карточки
-function handleLikeIcon(evt) {
-  evt.target.classList.toggle('photo-place__like_active');
-}
-
-// Функция удаления карточки
-function handleDeleteCard(evt) {
-  const element = evt.target.closest('.photo-place__element');
-  element.remove();
-}
-
-// Функция добавления слушателей для карточки
-function addEventListenersForCard(card, cardElement, cardImage) {
-  cardElement.querySelector('.photo-place__like').addEventListener('click', handleLikeIcon);
-  cardElement.querySelector('.photo-place__trash').addEventListener('click',handleDeleteCard);
-  cardImage.addEventListener('click', () => {
-    cardView(card);
-  });
-}
-
-// Функция добавления карточки в разметку
-function renderCard(card, cardOrder) {
-  cardOrder ? cardsContainer.append(addCard(card)) : cardsContainer.prepend(addCard(card));
-}
-
-function cardView(card) {
-  openPopup(containerViewImages);
-  popup.classList.add('popup__change-background');
-  const image = viewImages.querySelector('.popup__image');
-  const caption = viewImages.querySelector('.popup__caption');
-  image.src = card.link;
-  caption.textContent = card.name;
-  image.alt = card.name;
-  viewImages.append(image, caption);
+  creatingFormInstance(validationConfig, formAddCards);
 }
 
 function formSubmitHandler(evt) {
@@ -137,11 +99,11 @@ function formSubmitHandler(evt) {
 
 function formCardsSubmitHandler(evt) {
   evt.preventDefault();
-  const newCard = {};
-  newCard.name = inputNameCard.value;
-  newCard.link = InputLinkCard.value;
-  let cardOrder = false;
-  renderCard(newCard, cardOrder);
+  const newCard = [
+    {name: inputNameCard.value,
+    link: InputLinkCard.value}
+  ];
+  creatingCardInstance(newCard);
   findOpenContainer();
 }
 
@@ -151,5 +113,4 @@ formEditProfile.addEventListener('submit', formSubmitHandler);
 formAddCards.addEventListener('submit', formCardsSubmitHandler);
 popupCloseEditProfile.addEventListener('click', findOpenContainer);
 popupCloseAddCards.addEventListener('click', findOpenContainer);
-popupCloseViewImages.addEventListener('click', findOpenContainer);
 popup.addEventListener('click', closePopapInAreaOverlay); // Устанавливаем слушатель на зону "оверлей".
