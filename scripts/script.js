@@ -1,5 +1,5 @@
 import { initialCards, validationConfig } from '../utils/constants.js';
-import { openPopup, closePopapInAreaOverlay, findOpenContainer  } from '../utils/utils.js';
+import { openPopup, closePopapInAreaOverlay, findOpenContainer } from '../utils/utils.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 
@@ -35,7 +35,7 @@ function creatingCardInstance(item) {
 function loadCards(array) {
   array.forEach(function (item) {
     const element = creatingCardInstance(item);
-    const cardOrder = (array === initialCards) ? true : false;
+    const cardOrder = (array === initialCards);
     renderCard(element, cardOrder);
   });
 }
@@ -45,20 +45,20 @@ function renderCard(element, cardOrder) {
   cardOrder ? cardsContainer.append(element) : cardsContainer.prepend(element);
 }
 
-loadCards(initialCards);
+loadCards(initialCards); // Первоначальная загрузка карточек
 
-// Функция создания экземпляра класса, для проверяемой формы
-function creatingFormInstance(validationConfig, form) {
-  const formForValidation = new FormValidator(validationConfig, form);
-  formForValidation.enableValidation();
-}
+const formEditProfileValidation = new FormValidator(validationConfig, formEditProfile);
+formEditProfileValidation.enableValidation(); //Запуск валидации формы "Редактировать профиль"
+
+const formAddNewCardsValidation = new FormValidator(validationConfig, formAddCards);
+formAddNewCardsValidation.enableValidation(); //Запуск валидации формы "Добавление новых карточек"
 
 function editProfile() {
   openPopup(containerEditProfile);
   profileEditButton.blur();
   inputNameProfile.value = profileName.textContent;
   inputJobProfile.value = profileJob.textContent;
-  creatingFormInstance(validationConfig, formEditProfile); //Запуск валидации формы
+  formEditProfileValidation.resetForm(); //Очитска формы "Редактировать профиль" от ошибок и переключение кнопки "сабмита"
 }
 
 function addNewCards() {
@@ -66,7 +66,7 @@ function addNewCards() {
   cardsAddButton.blur();
   inputNameCard.value = '';
   InputLinkCard.value = '';
-  creatingFormInstance(validationConfig, formAddCards); //Запуск валидации формы
+  formAddNewCardsValidation.resetForm(); //Очитска формы "Добавление новых карточек" от ошибок и переключение кнопки "сабмита"
 }
 
 function formSubmitHandler(evt) {
@@ -78,10 +78,10 @@ function formSubmitHandler(evt) {
 
 function formCardsSubmitHandler(evt) {
   evt.preventDefault();
-  const newCard = [
-    {name: inputNameCard.value,
-    link: InputLinkCard.value}
-  ];
+  const newCard = [{
+    name: inputNameCard.value,
+    link: InputLinkCard.value
+  }];
   loadCards(newCard);
   findOpenContainer();
 }

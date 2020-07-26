@@ -13,29 +13,36 @@ export default class FormValidator {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
-    this._clearingFormFromError();
+    this._setEventListeners();
+  }
+
+  // Функция поиска всех полей формы и кнопки сабмита
+  _findAllInputs = () => {
+    this._allInput = Array.from(this._form.querySelectorAll(this._inputSelector));
+    this._button = this._form.querySelector(this._submitButtonSelector);
+  }
+  // Функция установки слушателей на все поля в форме.
+  _setEventListeners = () => {
+    this._findAllInputs();
+    this._allInput.forEach((input) => {
+      input.addEventListener('input', () => {
+        this._input = input;
+        this._checkInputValidity();
+        this._toggleSubmitButton();
+      });
+    });
   }
 
   // функция очистки форм от ошибок если при их наличии происходит закрытие попапа нажатием на "Esc", "Оверлей" или "Крестик".
-  _clearingFormFromError = () => {
-    this._allInput = Array.from(this._form.querySelectorAll(this._inputSelector));
-    this._button = this._form.querySelector(this._submitButtonSelector);
+  resetForm() {
+    this._findAllInputs();
     this._allInput.forEach((input) => {
       this._input = input;
       this._hideInputError();
       this._toggleSubmitButton();
-      this._setEventListeners(input);
     });
   }
 
-  // Функция установки слушателей на все поля в форме.
-  _setEventListeners = (input) => {
-    input.addEventListener('input', () => {
-      this._input = input;
-      this._checkInputValidity();
-      this._toggleSubmitButton();
-    });
-  }
 
   // Функция валидации полей формы.
   _checkInputValidity = () => {
