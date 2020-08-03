@@ -1,16 +1,10 @@
-import { popup }  from '../scripts/script.js';
-import { findOpenContainer, openPopup } from '../utils/utils.js';
-
-const containerViewImages = document.querySelector('.popup__container-view');
-const popupImage = containerViewImages.querySelector('.popup__image');
-const popupCaption = containerViewImages.querySelector('.popup__caption');
-const popupCloseViewImages = containerViewImages.querySelector('.popup__close_view');
-
 export default class Card {
-  constructor(data, cardSelector) {
-    this._name = data.name;
-		this._link = data.link;
+  constructor(item, cardSelector, handleCardClick) {
+    this._item = item;
+    this._name = item.name;
+		this._link = item.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
 	}
 
   // Шаблон разметки карточки
@@ -43,9 +37,8 @@ export default class Card {
       this._handleDeleteCard();
     });
     this._cardImage.addEventListener('click', () => {
-    this._viewCardImage();
+    this._handleCardClick(this._item);
     });
-    popupCloseViewImages.addEventListener('click', findOpenContainer);
   }
 
   // Функция переключения "лайка" для карточки
@@ -57,15 +50,6 @@ export default class Card {
   _handleDeleteCard() {
     this._element.remove();
     this._element = null;
-  }
-
-  // Функция просмотра изображения карточки, в модальном окне
-  _viewCardImage() {
-    openPopup(containerViewImages);
-    popup.classList.add('popup__change-background');
-    popupImage.src = this._link;
-    popupCaption.textContent = this._name;
-    popupImage.alt = this._name;
   }
 }
 

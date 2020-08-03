@@ -1,51 +1,55 @@
-import { initialCards, validationConfig } from '../utils/constants.js';
-import { openPopup, closePopapInAreaOverlay, findOpenContainer } from '../utils/utils.js';
-import Card from '../components/Card.js';
-import FormValidator from '../components/FormValidator.js';
+import { initialCards, validationConfig, profileConfig } from '../utils/constants.js';
 
-export const popup = document.querySelector('.popup');
+import UserInfo from '../components/UserInfo.js';
+import Card from '../components/Card.js';
+import Section from '../components/Sectiom.js';
+import FormValidator from '../components/FormValidator.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
-
 const profileEditButton = document.querySelector('.profile__editbutton');
-const containerEditProfile = popup.querySelector('.popup__container_profile');
-const formEditProfile = containerEditProfile.querySelector('.popup__form_profile');
+const formEditProfile = document.querySelector('.popup__form_profile');
 const inputNameProfile = formEditProfile.querySelector('.popup__input_name');
 const inputJobProfile = formEditProfile.querySelector('.popup__input_job');
-const popupCloseEditProfile = containerEditProfile.querySelector('.popup__close_container-profile');
-
 const cardsAddButton = document.querySelector('.profile__addbutton');
-const containerAddCards = popup.querySelector('.popup__container_cards');
-const formAddCards = containerAddCards.querySelector('.popup__form_cards');
+const formAddCards = document.querySelector('.popup__form_cards');
 const inputNameCard = formAddCards.querySelector('.popup__input_card-name');
 const InputLinkCard = formAddCards.querySelector('.popup__input_link');
-const popupCloseAddCards = containerAddCards.querySelector('.popup__close_container-cards');
 
-const cardsContainer = document.querySelector('.photo-place__elements');
-export const containerPopup = popup.querySelectorAll('.popup__container');
+const userProfile = new UserInfo(profileConfig); // Создаём экземпляр отображения информации о пользователе.
+const popupEditProfile = new PopupWithForm('.popup__container_profile', formSubmitHandler); // Создаём экземпляр "попапа" для формы "Редактирования профиля".
+const popupAddCards = new PopupWithForm('.popup__container_cards', formCardsSubmitHandler); // Создаём экземпляр "попапа" для формы "Добавления Карточек".
+const popupWithImage = new PopupWithImage('.popup__container-view'); // Создаём экземпляр "попапа" с изображением.
+// Функция открытия "попапа" с изображением
+function handleCardClick(item) {
+  popupWithImage.openPopup(item);
+}
 
 // Функция создания экземпляра карточки
-function creatingCardInstance(item) {
-  const card = new Card(item, '#photo-place__template');
+const creatingCardInstance = (item) => {
+  const card = new Card(item, '#photo-place__template', handleCardClick);
   const cardElement = card.generateCard();
   return cardElement;
 }
 
-// Функция первоначальной загрузки карточек
-function loadCards(array) {
-  array.forEach(function (item) {
-    const element = creatingCardInstance(item);
-    const cardOrder = (array === initialCards);
-    renderCard(element, cardOrder);
-  });
-}
+// Функция добавления карточек
+const addCards = (obj) => {
+  const section = new Section(obj, '.photo-place__elements');
+  section.loadCards();
+};
 
-// Функция добавления карточки в разметку
-function renderCard(element, cardOrder) {
-  cardOrder ? cardsContainer.append(element) : cardsContainer.prepend(element);
-}
+// Объект для начальной загрузки карточек
+let initialCardsObj = {
+  items: initialCards,
+  renderer: creatingCardInstance
+};
 
-loadCards(initialCards); // Первоначальная загрузка карточек
+addCards(initialCardsObj); // Первоначальная загрузка карточек
+
+
+
 
 const formEditProfileValidation = new FormValidator(validationConfig, formEditProfile);
 formEditProfileValidation.enableValidation(); //Запуск валидации формы "Редактировать профиль"
@@ -54,18 +58,16 @@ const formAddNewCardsValidation = new FormValidator(validationConfig, formAddCar
 formAddNewCardsValidation.enableValidation(); //Запуск валидации формы "Добавление новых карточек"
 
 function editProfile() {
-  openPopup(containerEditProfile);
+  popupEditProfile.openPopup();
   profileEditButton.blur();
-  inputNameProfile.value = profileName.textContent;
-  inputJobProfile.value = profileJob.textContent;
+  inputNameProfile.value = userProfile.getUserInfo().name;
+  inputJobProfile.value = userProfile.getUserInfo().job;
   formEditProfileValidation.resetForm(); //Очитска формы "Редактировать профиль" от ошибок и переключение кнопки "сабмита"
 }
 
 function addNewCards() {
-  openPopup(containerAddCards);
+  popupAddCards.openPopup();
   cardsAddButton.blur();
-  inputNameCard.value = '';
-  InputLinkCard.value = '';
   formAddNewCardsValidation.resetForm(); //Очитска формы "Добавление новых карточек" от ошибок и переключение кнопки "сабмита"
 }
 
@@ -73,7 +75,7 @@ function formSubmitHandler(evt) {
   evt.preventDefault();
   profileName.textContent = inputNameProfile.value;
   profileJob.textContent = inputJobProfile.value;
-  findOpenContainer();
+  popupEditProfile.closePopup();
 }
 
 function formCardsSubmitHandler(evt) {
@@ -82,14 +84,17 @@ function formCardsSubmitHandler(evt) {
     name: inputNameCard.value,
     link: InputLinkCard.value
   }];
-  loadCards(newCard);
-  findOpenContainer();
+  // Объект для загрузки карточек пользователя
+  let userCardsObj = {
+    items: newCard,
+    renderer: creatingCardInstance
+  };
+  addCards(userCardsObj);
+  popupAddCards.closePopup();
 }
 
 profileEditButton.addEventListener('click', editProfile);
 cardsAddButton.addEventListener('click', addNewCards);
-formEditProfile.addEventListener('submit', formSubmitHandler);
-formAddCards.addEventListener('submit', formCardsSubmitHandler);
-popupCloseEditProfile.addEventListener('click', findOpenContainer);
-popupCloseAddCards.addEventListener('click', findOpenContainer);
-popup.addEventListener('click', closePopapInAreaOverlay); // Устанавливаем слушатель на зону "оверлей".
+// formEditProfile.addEventListener('submit', formSubmitHandler);
+// formAddCards.addEventListener('submit', formCardsSubmitHandler);
+

@@ -30,3 +30,10 @@ export const validationConfig = ({
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 });
+
+export const profileConfig = ({
+  nameSelector: '.profile__name',
+  jobSelector: '.profile__job',
+});
+
+
