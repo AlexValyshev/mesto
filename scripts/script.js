@@ -11,6 +11,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 
 const userProfile = new UserInfo(profileConfig); // Создаём экземпляр отображения информации о пользователе.
+const { name, job } = userProfile.getUserInfo();
 const popupEditProfile = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Редактирования профиля".
   popupSelector: containerProfile, handleFormSubmit: (formData) => {
     userProfile.setUserInfo(formData);
@@ -57,17 +58,19 @@ formAddNewCardsValidation.enableValidation(); //Запуск валидации 
 function editProfile() {
   popupEditProfile.openPopup();
   profileEditButton.blur();
-  inputNameProfile.value = userProfile.getUserInfo().name;
-  inputJobProfile.value = userProfile.getUserInfo().job;
+  inputNameProfile.value = name;
+  inputJobProfile.value = job;
   formEditProfileValidation.resetForm(); //Очитска формы "Редактировать профиль" от ошибок и переключение кнопки "сабмита"
 }
 
 function addNewCards() {
-  popupAddCards.openPopup();
-  cardsAddButton.blur();
-  formAddNewCardsValidation.resetForm(); //Очитска формы "Добавление новых карточек" от ошибок и переключение кнопки "сабмита"
+
 }
 
 profileEditButton.addEventListener('click', editProfile);
-cardsAddButton.addEventListener('click', addNewCards);
+cardsAddButton.addEventListener('click', () => {
+  popupAddCards.openPopup();
+  cardsAddButton.blur();
+  formAddNewCardsValidation.resetForm(); //Очитска формы "Добавление новых карточек" от ошибок и переключение кнопки "сабмита"
+});
 
