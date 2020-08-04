@@ -1,9 +1,5 @@
-import { popup } from '../components/Popup.js';
+import { popup, popupImage, popupCaption } from '../utils/constants.js';
 import Popup from '../components/Popup.js';
-
-const containerViewImages = document.querySelector('.popup__container-view');
-const popupImage = containerViewImages.querySelector('.popup__image');
-const popupCaption = containerViewImages.querySelector('.popup__caption');
 
 export default class PopupWithImage extends Popup {
   constructor(popupSelector) {
@@ -16,5 +12,10 @@ export default class PopupWithImage extends Popup {
     popupImage.src = item.link;
     popupCaption.textContent = item.name;
     popupImage.alt = item.name;
+  }
+
+  closePopup() {
+    super.closePopup();
+    popup.classList.remove('popup__change-background');
   }
 }
