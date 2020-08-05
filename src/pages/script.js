@@ -55,19 +55,14 @@ formEditProfileValidation.enableValidation(); //Запуск валидации 
 const formAddNewCardsValidation = new FormValidator(validationConfig, formAddCards);
 formAddNewCardsValidation.enableValidation(); //Запуск валидации формы "Добавление новых карточек"
 
-function editProfile() {
+profileEditButton.addEventListener('click', () => {
   popupEditProfile.openPopup();
   profileEditButton.blur();
   inputNameProfile.value = name;
   inputJobProfile.value = job;
   formEditProfileValidation.resetForm(); //Очитска формы "Редактировать профиль" от ошибок и переключение кнопки "сабмита"
-}
+});
 
-function addNewCards() {
-
-}
-
-profileEditButton.addEventListener('click', editProfile);
 cardsAddButton.addEventListener('click', () => {
   popupAddCards.openPopup();
   cardsAddButton.blur();
