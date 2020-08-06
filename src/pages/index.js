@@ -6,18 +6,18 @@ import {
 } from '../utils/constants.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
-import Section from '../components/Sectiom.js';
+import Section from '../components/Section.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 
 const userProfile = new UserInfo(profileConfig); // Создаём экземпляр отображения информации о пользователе.
+const popupWithImage = new PopupWithImage(containerViewImages); // Создаём экземпляр "попапа" с изображением.
+popupWithImage.setEventListeners();
 
 // Функция открытия "попапа" с изображением
 function handleCardClick(item) {
-  const popupWithImage = new PopupWithImage(containerViewImages); // Создаём экземпляр "попапа" с изображением.
   popupWithImage.openPopup(item);
-  popupWithImage.setEventListeners();
 }
 
 // Функция создания и добавления карточек на страницу

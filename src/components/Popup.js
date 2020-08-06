@@ -3,24 +3,25 @@ export default class Popup {
   constructor(popupSelector) {
     this._popupSelector = popupSelector;
     this._container = popup.querySelector(this._popupSelector);
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   // Фунция открытия попапа.
   openPopup() {
     popup.classList.add('popup_opened');
     this._container.classList.add('popup__container_opened');
-    document.addEventListener('keydown', evt => this._handleEscClose(evt)); // Устанавливаем слушатель на кнопку "Esc".
-    popup.addEventListener('click', evt => this._closePopapInAreaOverlay(evt)); // Устанавливаем слушатель на зону "оверлей".
+    document.addEventListener('keydown', this._handleEscClose); // Устанавливаем слушатель на кнопку "Esc".
   }
 
   // Фунция закрытия попапа.
   closePopup() {
     popup.classList.remove('popup_opened');
     this._container.classList.remove('popup__container_opened');
-    document.removeEventListener('keydown', evt => this._handleEscClose(evt)); // Удаляем слушатель с кнопки "Esc".
+    document.removeEventListener('keydown', this._handleEscClose); // Удаляем слушатель с кнопки "Esc".
   }
 
   setEventListeners() {
+    popup.addEventListener('click', evt => this._closePopapInAreaOverlay(evt)); // Устанавливаем слушатель на зону "оверлей".
     this._iconClosePopup = this._container.querySelector('.popup__close');
     this._iconClosePopup.addEventListener('click', _ => { // Устанавливаем слушатель на иконку "X" закрытия попапа.
       this.closePopup();
