@@ -17,12 +17,12 @@ export default class FormValidator {
   }
 
   // Функция поиска всех полей формы и кнопки сабмита
-  _findAllInputs = () => {
+  _findAllInputs() {
     this._allInput = Array.from(this._form.querySelectorAll(this._inputSelector));
     this._button = this._form.querySelector(this._submitButtonSelector);
   }
   // Функция установки слушателей на все поля в форме.
-  _setEventListeners = () => {
+  _setEventListeners() {
     this._findAllInputs();
     this._allInput.forEach((input) => {
       input.addEventListener('input', () => {
@@ -45,7 +45,7 @@ export default class FormValidator {
 
 
   // Функция валидации полей формы.
-  _checkInputValidity = () => {
+  _checkInputValidity() {
     if (!this._input.validity.valid) {
       this._showInputError();
     } else {
@@ -54,7 +54,7 @@ export default class FormValidator {
   };
 
   // Функция добавления и стилизации ошибки, при невалидности поля формы.
-  _showInputError = () => {
+  _showInputError() {
     const inputError = this._form.querySelector(`#${this._input.id}-error`);
     this._input.classList.add(this._inputErrorClass);
     inputError.textContent = this._input.validationMessage;
@@ -62,7 +62,7 @@ export default class FormValidator {
   };
 
   // Функция удаления стилизации и ошибки, при валидности поля формы.
-  _hideInputError = () => {
+  _hideInputError() {
     const inputError = this._form.querySelector(`#${this._input.id}-error`);
     this._input.classList.remove(this._inputErrorClass);
     inputError.classList.remove(this._errorClass);
@@ -70,7 +70,7 @@ export default class FormValidator {
   };
 
   // Функция переключения кнопки.
-  _toggleSubmitButton = () => {
+  _toggleSubmitButton() {
     if (this._containsInvalidInput(this._allInput)) {
       this._button.classList.add(this._inactiveButtonClass);
       this._button.setAttribute('disabled', true);
@@ -81,7 +81,7 @@ export default class FormValidator {
   };
 
   // Функция проверки наличия невалидных полей в форме.
-  _containsInvalidInput = () => {
+  _containsInvalidInput() {
     return this._allInput.some((input) => {
       return !input.validity.valid;
     });

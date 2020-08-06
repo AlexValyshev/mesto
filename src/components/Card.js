@@ -30,13 +30,13 @@ export default class Card {
 
   // Функция установки слушателей для карточки
   _setEventListeners() {
-    this._element.querySelector('.photo-place__like').addEventListener('click', () => {
+    this._element.querySelector('.photo-place__like').addEventListener('click', _ => {
       this._handleLikeIcon();
     });
-    this._element.querySelector('.photo-place__trash').addEventListener('click', () => {
+    this._element.querySelector('.photo-place__trash').addEventListener('click', _ => {
       this._handleDeleteCard();
     });
-    this._cardImage.addEventListener('click', () => {
+    this._cardImage.addEventListener('click', _ => {
     this._handleCardClick(this._item);
     });
   }
