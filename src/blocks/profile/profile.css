@@ -5,12 +5,14 @@
 @import url(./__editbutton/profile__editbutton.css);
 @import url(./__job/profile__job.css);
 @import url(./__addbutton/profile__addbutton.css);
+@import url(./__pencil/profile__pencil.css);
 
 .profile {
   display: flex;
   /* border: 1px solid blue; */
   margin-bottom: 50px;
   flex-wrap: wrap;
+  position: relative;
 }
 
 @media screen and (max-width: 617px) {

@@ -24,6 +24,7 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._element.querySelector('.photo-place__title').textContent = this._name;
+    this._element.querySelector('.photo-place__number-likes').textContent = '222';
     this._setEventListeners();
     return this._element;
   }

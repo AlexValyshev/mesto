@@ -18,7 +18,9 @@
 
     <main class="content">
       <section class="profile page__container">
-        <img class="profile__avatar" src="./images/iv-custo.jpg" alt="Фото Жак-Ив Кусто">
+          <div class="profile__avatar">
+            <img class="profile__pencil " src="./images/pencil-avatar.svg" alt="Значок редактирования профиля">
+          </div>
         <div class="profile__info">
           <div class="profile__name-container">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -81,6 +83,19 @@
         </figure>
         <button type="button" class="popup__close popup__close_view"></button>
       </div>
+      <div class="popup__container popup__container-form popup__container_avatar">
+        <form name="form-avatar" action="#" method="post" class="popup__form popup__form_avatar" novalidate>
+          <h3 class="popup__form-heading">Обновить аватар</h3>
+          <fieldset class="popup__info">
+            <label for="avatar" class="popup__label"></label>
+            <input class="popup__input popup__input_avatar" type="url" id="avatar-input" name="avatar"
+              placeholder="Ссылка на новый аватар" required>
+            <span id="avatar-input-error" class="popup__error"></span>
+          </fieldset>
+          <button class="popup__button popup__button_save-avatar" type="submit">Сохранить</button>
+        </form>
+        <button type="button" class="popup__close popup__close_container-avatar"></button>
+      </div>
     </section>
   </div>
   <template id="photo-place__template">
@@ -89,7 +104,10 @@
       <img src="#" alt="" class="photo-place__image">
       <div class="photo-place__group">
         <h2 class="photo-place__title"></h2>
-        <button type="button" class="photo-place__like"></button>
+        <div class="photo-place__group-like">
+          <button type="button" class="photo-place__like"></button>
+          <p class="photo-place__number-likes"></p>
+        </div>
       </div>
     </li>
   </template>

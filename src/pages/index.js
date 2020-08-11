@@ -2,7 +2,7 @@ import '../pages/index.css';
 import {
   initialCards, validationConfig, profileConfig, containerSelector, containerProfile,
   containerUserCards, containerViewImages, profileEditButton, formEditProfile, inputNameProfile,
-  inputJobProfile, cardsAddButton, formAddCards
+  inputJobProfile, cardsAddButton, formAddCards, containerAvatar, newAvatar, formNewAvatar
 } from '../utils/constants.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
@@ -50,11 +50,22 @@ const popupAddCards = new PopupWithForm({  // Создаём экземпляр 
 });
 popupAddCards.setEventListeners();
 
+const popupNewAvatar = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Изменения Аватара".
+  popupSelector: containerAvatar, handleFormSubmit: (formData) => {
+    newAvatar.style.backgroundImage = `url(${formData.avatar})`;
+    popupNewAvatar.closePopup();
+  }
+});
+popupNewAvatar.setEventListeners();
+
 const formEditProfileValidation = new FormValidator(validationConfig, formEditProfile);
 formEditProfileValidation.enableValidation(); //Запуск валидации формы "Редактировать профиль"
 
 const formAddNewCardsValidation = new FormValidator(validationConfig, formAddCards);
 formAddNewCardsValidation.enableValidation(); //Запуск валидации формы "Добавление новых карточек"
+
+const formNewAvatarValidation = new FormValidator(validationConfig, formNewAvatar);
+formNewAvatarValidation.enableValidation(); //Запуск валидации формы "Изменения аватара"
 
 profileEditButton.addEventListener('click', _ => {
   popupEditProfile.openPopup();
@@ -69,5 +80,14 @@ cardsAddButton.addEventListener('click', _ => {
   popupAddCards.openPopup();
   cardsAddButton.blur();
   formAddNewCardsValidation.resetForm(); //Очитска формы "Добавление новых карточек" от ошибок и переключение кнопки "сабмита"
+});
+
+newAvatar.addEventListener('click', _ => {
+  popupNewAvatar.openPopup();
+  newAvatar.blur();
+  // const { name, job } = userProfile.getUserInfo();
+  // inputNameProfile.value = name;
+  // inputJobProfile.value = job;
+  formNewAvatarValidation.resetForm(); //Очитска формы "Изменение аватара" от ошибок и переключение кнопки "сабмита"
 });
 

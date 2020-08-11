@@ -1,9 +1,9 @@
 .photo-place__like {
   min-width: 21px;
   height: 19px;
-  align-self: center;
-  margin-bottom: -1px;
-  margin-right: 1px;
+  /* align-self: center; */
+  margin-bottom: 3px;
+  /* margin-right: 1px; */
   padding: 0;
   border: none;
   background: transparent;
