@@ -2,7 +2,8 @@ import '../pages/index.css';
 import {
   initialCards, validationConfig, profileConfig, containerSelector, containerProfile,
   containerUserCards, containerViewImages, profileEditButton, formEditProfile, inputNameProfile,
-  inputJobProfile, cardsAddButton, formAddCards, containerAvatar, newAvatar, formNewAvatar
+  inputJobProfile, cardsAddButton, formAddCards, containerAvatar, newAvatar, formNewAvatar,
+  containerTrash
 } from '../utils/constants.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
@@ -10,6 +11,7 @@ import Section from '../components/Section.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithTrash from '../components/PopupWithTrash.js';
 
 const userProfile = new UserInfo(profileConfig); // Создаём экземпляр отображения информации о пользователе.
 const popupWithImage = new PopupWithImage(containerViewImages); // Создаём экземпляр "попапа" с изображением.
@@ -20,11 +22,22 @@ function handleCardClick(item) {
   popupWithImage.openPopup(item);
 }
 
+// Функция открытия "попапа" удаления карточки
+function handleTrashClick(card) {
+  const popupWithTrash = new PopupWithTrash({  // Создаём экземпляр "попапа" удаления карточки.
+    popupSelector: containerTrash, handleFormSubmit: _ => {
+      popupWithTrash.closePopup();
+    }
+  });
+  popupWithTrash.openPopup();
+  popupWithTrash.setEventListeners(card);
+}
+
 // Функция создания и добавления карточек на страницу
 const addCards = (items) => {
   const initialCardsList = new Section({
     data: items, renderer: (item) => {
-      const card = new Card(item, '#photo-place__template', handleCardClick);
+      const card = new Card(item, '#photo-place__template', handleCardClick, handleTrashClick);
       const cardElement = card.generateCard();
       initialCardsList.addItem(cardElement);
     }
@@ -85,9 +98,6 @@ cardsAddButton.addEventListener('click', _ => {
 newAvatar.addEventListener('click', _ => {
   popupNewAvatar.openPopup();
   newAvatar.blur();
-  // const { name, job } = userProfile.getUserInfo();
-  // inputNameProfile.value = name;
-  // inputJobProfile.value = job;
   formNewAvatarValidation.resetForm(); //Очитска формы "Изменение аватара" от ошибок и переключение кнопки "сабмита"
 });
 

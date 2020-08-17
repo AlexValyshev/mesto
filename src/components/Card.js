@@ -1,10 +1,11 @@
 export default class Card {
-  constructor(item, cardSelector, handleCardClick) {
+  constructor(item, cardSelector, handleCardClick, handleTrashClick) {
     this._item = item;
     this._name = item.name;
 		this._link = item.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleTrashClick = handleTrashClick;
 	}
 
   // Шаблон разметки карточки
@@ -35,7 +36,7 @@ export default class Card {
       this._handleLikeIcon();
     });
     this._element.querySelector('.photo-place__trash').addEventListener('click', _ => {
-      this._handleDeleteCard();
+      this._handleTrashClick(this._element);
     });
     this._cardImage.addEventListener('click', _ => {
     this._handleCardClick(this._item);
