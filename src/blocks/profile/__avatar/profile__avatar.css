@@ -5,6 +5,7 @@
   border-radius: 50%;
   background: url('../../../images/iv-custo.jpg');
   background-size: cover;
+  background-position: center;
   cursor: pointer;
   display: flex;
   align-items: center;

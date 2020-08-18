@@ -2,8 +2,8 @@ import '../pages/index.css';
 import {
   initialCards, validationConfig, profileConfig, containerSelector, containerProfile,
   containerUserCards, containerViewImages, profileEditButton, formEditProfile, inputNameProfile,
-  inputJobProfile, cardsAddButton, formAddCards, containerAvatar, newAvatar, formNewAvatar,
-  containerTrash
+  inputJobProfile, cardsAddButton, formAddCards, containerAvatar, avatar, formNewAvatar,
+  containerTrash, userName, userJob
 } from '../utils/constants.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
@@ -11,7 +11,26 @@ import Section from '../components/Section.js';
 import FormValidator from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithTrash from '../components/PopupWithTrash.js';
+import PopupWithSubmit from '../components/PopupWithSubmit.js';
+import Api from '../components/Api.js';
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+  headers: {
+    authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867',
+    'Content-Type': 'application/json'
+  }
+});
+
+api.getUserInfo()
+  .then((result) => {
+    avatar.style.backgroundImage = `url(${result.avatar})`;// Загрузка информации о пользователе.
+    userName.textContent = result.name;
+    userJob.textContent = result.about;
+  })
+  .catch((err) => {
+    console.log(err); // Выведем ошибку в консоль
+  });
 
 const userProfile = new UserInfo(profileConfig); // Создаём экземпляр отображения информации о пользователе.
 const popupWithImage = new PopupWithImage(containerViewImages); // Создаём экземпляр "попапа" с изображением.
@@ -22,15 +41,16 @@ function handleCardClick(item) {
   popupWithImage.openPopup(item);
 }
 
-// Функция открытия "попапа" удаления карточки
-function handleTrashClick(card) {
-  const popupWithTrash = new PopupWithTrash({  // Создаём экземпляр "попапа" удаления карточки.
+const popupWithSubmit = new PopupWithSubmit({  // Создаём экземпляр "попапа" удаления карточки.
     popupSelector: containerTrash, handleFormSubmit: _ => {
-      popupWithTrash.closePopup();
+      popupWithSubmit.closePopup();
     }
-  });
-  popupWithTrash.openPopup();
-  popupWithTrash.setEventListeners(card);
+});
+
+// Функция открытия "попапа" удаления карточки
+function handleTrashClick(element) {
+  popupWithSubmit.openPopup();
+  popupWithSubmit.setEventListeners(element);
 }
 
 // Функция создания и добавления карточек на страницу
@@ -44,7 +64,15 @@ const addCards = (items) => {
   }, containerSelector);
   initialCardsList.renderItems();
 }
-addCards(initialCards); // Первоначальная загрузка карточек
+
+api.getInitialCards()
+  .then((result) => {
+    addCards(result); // Первоначальная загрузка карточек
+  })
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
+
 
 const popupEditProfile = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Редактирования профиля".
   popupSelector: containerProfile, handleFormSubmit: (formData) => {
@@ -65,7 +93,7 @@ popupAddCards.setEventListeners();
 
 const popupNewAvatar = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Изменения Аватара".
   popupSelector: containerAvatar, handleFormSubmit: (formData) => {
-    newAvatar.style.backgroundImage = `url(${formData.avatar})`;
+    avatar.style.backgroundImage = `url(${formData.avatar})`;
     popupNewAvatar.closePopup();
   }
 });
@@ -95,9 +123,9 @@ cardsAddButton.addEventListener('click', _ => {
   formAddNewCardsValidation.resetForm(); //Очитска формы "Добавление новых карточек" от ошибок и переключение кнопки "сабмита"
 });
 
-newAvatar.addEventListener('click', _ => {
+avatar.addEventListener('click', _ => {
   popupNewAvatar.openPopup();
-  newAvatar.blur();
+  avatar.blur();
   formNewAvatarValidation.resetForm(); //Очитска формы "Изменение аватара" от ошибок и переключение кнопки "сабмита"
 });
 

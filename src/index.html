@@ -55,7 +55,10 @@
               minlength="2" maxlength="200" required>
             <span id="job-input-error" class="popup__error"></span>
           </fieldset>
-          <button class="popup__button popup__button_save-profile" type="submit">Сохранить</button>
+          <button class="popup__button popup__button_save-profile" type="submit">
+            <h4 class="popup__button-text">Сохранить</h4>
+            <h4 class="popup__button-text popup__button-text_disabled">Сохранение...</h4>
+          </button>
         </form>
         <button type="button" class="popup__close popup__close_container-profile"></button>
       </div>
@@ -72,7 +75,10 @@
               placeholder="Сссылка на картинку" required>
             <span id="link-input-error" class="popup__error"></span>
           </fieldset>
-          <button class="popup__button popup__button_save-card" type="submit">Сохранить</button>
+          <button class="popup__button popup__button_save-card" type="submit">
+            <h4 class="popup__button-text">Сохранить</h4>
+            <h4 class="popup__button-text popup__button-text_disabled">Сохранение...</h4>
+          </button>
         </form>
         <button type="button" class="popup__close popup__close_container-cards"></button>
       </div>
@@ -92,14 +98,17 @@
               placeholder="Ссылка на новый аватар" required>
             <span id="avatar-input-error" class="popup__error"></span>
           </fieldset>
-          <button class="popup__button popup__button_save-avatar" type="submit">Сохранить</button>
+          <button class="popup__button popup__button_save-avatar" type="submit">
+            <h4 class="popup__button-text">Сохранить</h4>
+            <h4 class="popup__button-text popup__button-text_disabled">Сохранение...</h4>
+          </button>
         </form>
         <button type="button" class="popup__close popup__close_container-avatar"></button>
       </div>
       <div class="popup__container popup__container-form popup__container_trash">
         <form name="form-trash" action="#" method="post" class="popup__form popup__form_trash" novalidate>
           <h3 class="popup__form-heading">Вы уверены?</h3>
-          <button class="popup__button popup__button_trash" type="submit">Да</button>
+          <button class="popup__button popup__button-text popup__button_trash" type="submit">Да</button>
         </form>
         <button type="button" class="popup__close popup__close_container-trash"></button>
       </div>

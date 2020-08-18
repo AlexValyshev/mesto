@@ -1,7 +1,7 @@
 .popup__form-heading {
   width: 100%;
   margin: 0;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
   font-family: 'Inter', ‘Arial’, sans-serif;
   font-style: normal;
   font-weight: 900;
@@ -12,7 +12,6 @@
 
 @media screen and (max-width: 510px) {
   .popup__form-heading {
-    margin-bottom: 32px;
     font-size: 18px;
     line-height: 22px;
   }

@@ -5,6 +5,7 @@
   padding: 0;
   font-size: 0;
   margin-bottom: 28px;
+  padding-top: 16px;
 }
 
 @media screen and (max-width: 510px) {

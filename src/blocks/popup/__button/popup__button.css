@@ -6,13 +6,6 @@
   border: none;
   border-radius: 2px;
   background: #000000;
-  font-family: 'Inter', ‘Arial’, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 22px;
-  color: #ffffff;
-  text-align: center;
   cursor: pointer;
   transition: opacity 0.3s linear;
 }
@@ -21,11 +14,4 @@
   opacity: 0.8;
 }
 
-@media screen and (max-width: 510px) {
-  .popup__button {
-    height: 40px;
-    font-size: 14px;
-    line-height: 17px;
-  }
-}
 

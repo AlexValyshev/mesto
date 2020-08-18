@@ -51,6 +51,8 @@ export const inputNameProfile = formEditProfile.querySelector('.popup__input_nam
 export const inputJobProfile = formEditProfile.querySelector('.popup__input_job');
 export const cardsAddButton = document.querySelector('.profile__addbutton');
 export const formAddCards = popup.querySelector('.popup__form_cards');
-export const newAvatar = document.querySelector('.profile__avatar');
+export const avatar = document.querySelector('.profile__avatar');
+export const userName = document.querySelector('.profile__name');
+export const userJob = document.querySelector('.profile__job');
 export const formNewAvatar = popup.querySelector('.popup__form_avatar');
 

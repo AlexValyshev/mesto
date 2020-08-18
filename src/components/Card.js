@@ -49,7 +49,7 @@ export default class Card {
   }
 
   // Функция удаления карточки
-  _handleDeleteCard() {
+  handleDeleteCard() {
     this._element.remove();
     this._element = null;
   }
