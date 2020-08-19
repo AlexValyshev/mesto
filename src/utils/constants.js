@@ -1,14 +1,14 @@
 export const initialCards = [{
-  name: 'Архыз',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  name: 'Карелия',
+  link: 'https://images.unsplash.com/photo-1589553421708-778f91ebe745?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80'
 },
 {
-  name: 'Челябинская область',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  name: 'Новосибирск',
+  link: 'https://images.unsplash.com/photo-1579711428858-ad80bf1a7362?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
 },
 {
-  name: 'Иваново',
-  link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  name: 'Инструмент',
+  link: 'https://images.unsplash.com/photo-1590417899074-3bb180d5ff67?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1351&q=80'
 },
 {
   name: 'Камчатка',
@@ -55,4 +55,5 @@ export const avatar = document.querySelector('.profile__avatar');
 export const userName = document.querySelector('.profile__name');
 export const userJob = document.querySelector('.profile__job');
 export const formNewAvatar = popup.querySelector('.popup__form_avatar');
+export const trashButton = document.querySelector('.photo-place__trash');
 

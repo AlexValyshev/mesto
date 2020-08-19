@@ -1,9 +1,9 @@
 import '../pages/index.css';
 import {
-  initialCards, validationConfig, profileConfig, containerSelector, containerProfile,
+  validationConfig, profileConfig, containerSelector, containerProfile,
   containerUserCards, containerViewImages, profileEditButton, formEditProfile, inputNameProfile,
   inputJobProfile, cardsAddButton, formAddCards, containerAvatar, avatar, formNewAvatar,
-  containerTrash, userName, userJob
+  containerTrash, userName, userJob, trashButton
 } from '../utils/constants.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
@@ -22,16 +22,6 @@ const api = new Api({
   }
 });
 
-api.getUserInfo()
-  .then((result) => {
-    avatar.style.backgroundImage = `url(${result.avatar})`;// Загрузка информации о пользователе.
-    userName.textContent = result.name;
-    userJob.textContent = result.about;
-  })
-  .catch((err) => {
-    console.log(err); // Выведем ошибку в консоль
-  });
-
 const userProfile = new UserInfo(profileConfig); // Создаём экземпляр отображения информации о пользователе.
 const popupWithImage = new PopupWithImage(containerViewImages); // Создаём экземпляр "попапа" с изображением.
 popupWithImage.setEventListeners();
@@ -42,9 +32,9 @@ function handleCardClick(item) {
 }
 
 const popupWithSubmit = new PopupWithSubmit({  // Создаём экземпляр "попапа" удаления карточки.
-    popupSelector: containerTrash, handleFormSubmit: _ => {
-      popupWithSubmit.closePopup();
-    }
+  popupSelector: containerTrash, handleFormSubmit: _ => {
+    popupWithSubmit.closePopup();
+  }
 });
 
 // Функция открытия "попапа" удаления карточки
@@ -65,14 +55,16 @@ const addCards = (items) => {
   initialCardsList.renderItems();
 }
 
-api.getInitialCards()
-  .then((result) => {
-    addCards(result); // Первоначальная загрузка карточек
+api.getInitialInfo()
+  .then(([userInfo, initialCards]) => {
+    avatar.style.backgroundImage = `url(${userInfo.avatar})`;// Загрузка информации о пользователе.
+    userName.textContent = userInfo.name;
+    userJob.textContent = userInfo.about;
+    addCards(initialCards); // Первоначальная загрузка карточек
   })
   .catch((err) => {
-    console.log(err); // выведем ошибку в консоль
+    console.log(err); // Выведем ошибку в консоль
   });
-
 
 const popupEditProfile = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Редактирования профиля".
   popupSelector: containerProfile, handleFormSubmit: (formData) => {
@@ -84,8 +76,17 @@ popupEditProfile.setEventListeners();
 
 const popupAddCards = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Добавления Карточек".
   popupSelector: containerUserCards, handleFormSubmit: (formData) => {
-    const newCard = [{ name: formData.card, link: formData.link }];
+    const newCard = [{ name: formData.card, link: formData.link, likes: [] }];
+    console.log(trashButton);
+    // trashButton.classList.add('photo-place__trash_visible');
     addCards(newCard);
+    api.addNewCard(newCard)
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err); // Выведем ошибку в консоль
+  });
     popupAddCards.closePopup();
   }
 });

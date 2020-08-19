@@ -6,6 +6,7 @@
 @import url(./__like/photo-place__like.css);
 @import url(./__like/_active/photo-place__like_active.css);
 @import url(./__trash/photo-place__trash.css);
+@import url(./__trash/_visible/photo-place__trash_visible.css);
 @import url(./__group-like/photo-place__group-like.css);
 @import url(./__number-likes/photo-place__number-likes.css);
 
