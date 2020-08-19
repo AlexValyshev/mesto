@@ -36,16 +36,16 @@ export default class Api {
     return Promise.all(this._promises);
   }
 
-  setUserInfo() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-14/cards', {
+  setUserInfo({ name, job }) {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me', {
       method: 'PATCH',
       headers: {
         authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: 'Aleksander Valyshev',
-        about: 'Student Yandex Practice'
+        name: `${name}`,
+        about: `${job}`
       })
     })
       .then(res => {
@@ -57,8 +57,6 @@ export default class Api {
   }
 
   addNewCard([{ name, link }]) {
-    console.log(name);
-    console.log(link);
     return fetch('https://mesto.nomoreparties.co/v1/cohort-14/cards', {
       method: 'POST',
       headers: {
@@ -68,6 +66,40 @@ export default class Api {
       body: JSON.stringify({
         name: `${name}`,
         link: `${link}`
+      })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
+  deleteCard(itemId) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-14/cards/${itemId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867'
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
+  setUserAvatar({ avatar }) {
+    return fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me/avatar', {
+      method: 'PATCH',
+      headers: {
+        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        avatar: `${avatar}`
       })
     })
       .then(res => {

@@ -31,23 +31,30 @@ function handleCardClick(item) {
   popupWithImage.openPopup(item);
 }
 
-const popupWithSubmit = new PopupWithSubmit({  // Создаём экземпляр "попапа" удаления карточки.
+// Функция открытия "попапа" удаления карточки
+function handleTrashClick(itemId, deleteCard, element) {
+  const popupWithSubmit = new PopupWithSubmit({  // Создаём экземпляр "попапа" удаления карточки.
   popupSelector: containerTrash, handleFormSubmit: _ => {
+    api.deleteCard(itemId) // Запрос на удаление карточки
+    .then((result) => {
+      console.log(result);
+      deleteCard(element);
+    })
+    .catch((err) => {
+      console.log(err); // Выведем ошибку в консоль
+    });
     popupWithSubmit.closePopup();
   }
 });
-
-// Функция открытия "попапа" удаления карточки
-function handleTrashClick(element) {
   popupWithSubmit.openPopup();
-  popupWithSubmit.setEventListeners(element);
+  popupWithSubmit.setEventListeners();
 }
 
 // Функция создания и добавления карточек на страницу
-const addCards = (items) => {
+const addCards = (items, userInfo) => {
   const initialCardsList = new Section({
     data: items, renderer: (item) => {
-      const card = new Card(item, '#photo-place__template', handleCardClick, handleTrashClick);
+      const card = new Card(item, userInfo, '#photo-place__template', handleCardClick, handleTrashClick);
       const cardElement = card.generateCard();
       initialCardsList.addItem(cardElement);
     }
@@ -57,10 +64,11 @@ const addCards = (items) => {
 
 api.getInitialInfo()
   .then(([userInfo, initialCards]) => {
+    console.log(userInfo.avatar)
     avatar.style.backgroundImage = `url(${userInfo.avatar})`;// Загрузка информации о пользователе.
     userName.textContent = userInfo.name;
     userJob.textContent = userInfo.about;
-    addCards(initialCards); // Первоначальная загрузка карточек
+    addCards(initialCards, userInfo); // Первоначальная загрузка карточек
   })
   .catch((err) => {
     console.log(err); // Выведем ошибку в консоль
@@ -68,32 +76,45 @@ api.getInitialInfo()
 
 const popupEditProfile = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Редактирования профиля".
   popupSelector: containerProfile, handleFormSubmit: (formData) => {
-    userProfile.setUserInfo(formData);
+    api.setUserInfo(formData) // Запрос на обновление данных профиля
+      .then((result) => {
+        userProfile.setUserInfo(formData);
+      })
+      .catch((err) => {
+        console.log(err); // Выведем ошибку в консоль
+      });
+    // userProfile.setUserInfo(formData);
     popupEditProfile.closePopup();
   }
 });
 popupEditProfile.setEventListeners();
 
-const popupAddCards = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Добавления Карточек".
+const popupAddCards = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Добавления новых Карточек".
   popupSelector: containerUserCards, handleFormSubmit: (formData) => {
-    const newCard = [{ name: formData.card, link: formData.link, likes: [] }];
-    console.log(trashButton);
-    // trashButton.classList.add('photo-place__trash_visible');
-    addCards(newCard);
-    api.addNewCard(newCard)
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err); // Выведем ошибку в консоль
-  });
+    const newCard = [{ name: formData.card, link: formData.link }];
+    api.addNewCard(newCard) // Загрузка новой карточки на сервер
+      .then((result) => {
+        addCards([result], result.owner);
+      })
+      .catch((err) => {
+        console.log(err); // Выведем ошибку в консоль
+      });
     popupAddCards.closePopup();
   }
 });
 popupAddCards.setEventListeners();
 
+
 const popupNewAvatar = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Изменения Аватара".
   popupSelector: containerAvatar, handleFormSubmit: (formData) => {
+    api.setUserAvatar(formData) // Загрузка нового аватара на сервер
+      .then((result) => {
+        console.log(result);
+
+      })
+      .catch((err) => {
+        console.log(err); // Выведем ошибку в консоль
+      });
     avatar.style.backgroundImage = `url(${formData.avatar})`;
     popupNewAvatar.closePopup();
   }
