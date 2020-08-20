@@ -3,7 +3,8 @@ import {
   validationConfig, profileConfig, containerSelector, containerProfile,
   containerUserCards, containerViewImages, profileEditButton, formEditProfile, inputNameProfile,
   inputJobProfile, cardsAddButton, formAddCards, containerAvatar, avatar, formNewAvatar,
-  containerTrash, userName, userJob, trashButton, saveButtonProfile, saveButtonCard, saveButtonAvatar
+  containerTrash, userName, userJob, profileSubmitSaveText, profileSubmitSavingText, cardSubmitSaveText,
+  cardSubmitSavingText, avatarSubmitSaveText, avatarSubmitSavingText, textDisabledClass
 } from '../utils/constants.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
@@ -76,11 +77,9 @@ function handleRemoveLike(itemId) {
 const addCards = (items, userInfo) => {
   const initialCardsList = new Section({
     data: items, renderer: (item) => {
-      if (item.name !== "Зинедин") {
-        const card = new Card(item, userInfo, '#photo-place__template', handleCardClick, handleTrashClick, handleAddLike, handleRemoveLike);
-        const cardElement = card.generateCard();
-        initialCardsList.addItem(cardElement);
-      }
+      const card = new Card(item, userInfo, '#photo-place__template', handleCardClick, handleTrashClick, handleAddLike, handleRemoveLike);
+      const cardElement = card.generateCard();
+      initialCardsList.addItem(cardElement);
     }
   }, containerSelector);
   initialCardsList.renderItems();
@@ -100,10 +99,11 @@ api.getInitialInfo()
 
 const popupEditProfile = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Редактирования профиля".
   popupSelector: containerProfile, handleFormSubmit: (formData) => {
-    saveButtonProfile
+    profileSubmitSaveText.classList.add(textDisabledClass);
+    profileSubmitSavingText.classList.remove(textDisabledClass);
     api.setUserInfo(formData) // Запрос на обновление данных профиля
       .then((result) => {
-        userProfile.setUserInfo(formData);
+        userProfile.setUserInfo(result);
       })
       .catch((err) => {
         console.log(err); // Выведем ошибку в консоль
@@ -135,7 +135,6 @@ const popupNewAvatar = new PopupWithForm({  // Создаём экземпляр
     api.setUserAvatar(formData) // Загрузка нового аватара на сервер
       .then((result) => {
         console.log(result);
-
       })
       .catch((err) => {
         console.log(err); // Выведем ошибку в консоль
@@ -157,6 +156,8 @@ formNewAvatarValidation.enableValidation(); //Запуск валидации ф
 
 profileEditButton.addEventListener('click', _ => {
   popupEditProfile.openPopup();
+  profileSubmitSaveText.classList.remove(textDisabledClass);
+  profileSubmitSavingText.classList.add(textDisabledClass);
   profileEditButton.blur();
   const { name, job } = userProfile.getUserInfo();
   inputNameProfile.value = name;

@@ -15,7 +15,6 @@
 @import url(./__error/popup__error.css);
 @import url(./__error/_visible/popup__error_visible.css);
 @import url(./__button-text/popup__button-text.css);
-@import url(./__button-text/_disabled/popup__button-text_disabled.css);
 
 .popup {
   width: 100%;
