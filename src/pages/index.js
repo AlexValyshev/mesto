@@ -3,7 +3,7 @@ import {
   validationConfig, profileConfig, containerSelector, containerProfile,
   containerUserCards, containerViewImages, profileEditButton, formEditProfile, inputNameProfile,
   inputJobProfile, cardsAddButton, formAddCards, containerAvatar, avatar, formNewAvatar,
-  containerTrash, userName, userJob, trashButton
+  containerTrash, userName, userJob, trashButton, saveButtonProfile, saveButtonCard, saveButtonAvatar
 } from '../utils/constants.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
@@ -32,31 +32,55 @@ function handleCardClick(item) {
 }
 
 // Функция открытия "попапа" удаления карточки
-function handleTrashClick(itemId, deleteCard, element) {
+function handleTrashClick(itemId, handleDeleteCard, element) {
   const popupWithSubmit = new PopupWithSubmit({  // Создаём экземпляр "попапа" удаления карточки.
-  popupSelector: containerTrash, handleFormSubmit: _ => {
-    api.deleteCard(itemId) // Запрос на удаление карточки
+    popupSelector: containerTrash, handleFormSubmit: _ => {
+      api.deleteCard(itemId) // Запрос на удаление карточки
+        .then((result) => {
+          console.log(result);
+          handleDeleteCard(element);
+        })
+        .catch((err) => {
+          console.log(err); // Выведем ошибку в консоль
+        });
+      popupWithSubmit.closePopup();
+    }
+  });
+  popupWithSubmit.openPopup();
+  popupWithSubmit.setEventListeners();
+}
+
+// Функция добавления колличества лайков
+function handleAddLike(itemId) {
+  api.addLikeCard(itemId) // Запрос на добавление лайка
     .then((result) => {
       console.log(result);
-      deleteCard(element);
     })
     .catch((err) => {
       console.log(err); // Выведем ошибку в консоль
     });
-    popupWithSubmit.closePopup();
-  }
-});
-  popupWithSubmit.openPopup();
-  popupWithSubmit.setEventListeners();
+}
+
+// Функция уменьшения колличества лайков
+function handleRemoveLike(itemId) {
+  api.removeLikeCard(itemId) // Запрос на удаление лайка
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err); // Выведем ошибку в консоль
+    });
 }
 
 // Функция создания и добавления карточек на страницу
 const addCards = (items, userInfo) => {
   const initialCardsList = new Section({
     data: items, renderer: (item) => {
-      const card = new Card(item, userInfo, '#photo-place__template', handleCardClick, handleTrashClick);
-      const cardElement = card.generateCard();
-      initialCardsList.addItem(cardElement);
+      if (item.name !== "Зинедин") {
+        const card = new Card(item, userInfo, '#photo-place__template', handleCardClick, handleTrashClick, handleAddLike, handleRemoveLike);
+        const cardElement = card.generateCard();
+        initialCardsList.addItem(cardElement);
+      }
     }
   }, containerSelector);
   initialCardsList.renderItems();
@@ -64,7 +88,7 @@ const addCards = (items, userInfo) => {
 
 api.getInitialInfo()
   .then(([userInfo, initialCards]) => {
-    console.log(userInfo.avatar)
+    console.log(initialCards)
     avatar.style.backgroundImage = `url(${userInfo.avatar})`;// Загрузка информации о пользователе.
     userName.textContent = userInfo.name;
     userJob.textContent = userInfo.about;
@@ -76,6 +100,7 @@ api.getInitialInfo()
 
 const popupEditProfile = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Редактирования профиля".
   popupSelector: containerProfile, handleFormSubmit: (formData) => {
+    saveButtonProfile
     api.setUserInfo(formData) // Запрос на обновление данных профиля
       .then((result) => {
         userProfile.setUserInfo(formData);
@@ -83,7 +108,6 @@ const popupEditProfile = new PopupWithForm({  // Создаём экземпля
       .catch((err) => {
         console.log(err); // Выведем ошибку в консоль
       });
-    // userProfile.setUserInfo(formData);
     popupEditProfile.closePopup();
   }
 });
@@ -107,6 +131,7 @@ popupAddCards.setEventListeners();
 
 const popupNewAvatar = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Изменения Аватара".
   popupSelector: containerAvatar, handleFormSubmit: (formData) => {
+
     api.setUserAvatar(formData) // Загрузка нового аватара на сервер
       .then((result) => {
         console.log(result);

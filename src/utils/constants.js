@@ -56,4 +56,7 @@ export const userName = document.querySelector('.profile__name');
 export const userJob = document.querySelector('.profile__job');
 export const formNewAvatar = popup.querySelector('.popup__form_avatar');
 export const trashButton = document.querySelector('.photo-place__trash');
+export const saveButtonProfile = formEditProfile.querySelector('.popup__button-text');
+export const saveButtonCard = formAddCards.querySelector('.popup__button-text');
+export const saveButtonAvatar = formNewAvatar.querySelector('.popup__button-text');
 

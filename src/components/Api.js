@@ -110,6 +110,36 @@ export default class Api {
       });
   }
 
+  addLikeCard(itemId) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-14/cards/likes/${itemId}`, {
+      method: 'PUT',
+      headers: {
+        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867'
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
+  removeLikeCard(itemId) {
+    return fetch(`https://mesto.nomoreparties.co/v1/cohort-14/cards/likes/${itemId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867'
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
   // другие методы работы с API
 }
 
