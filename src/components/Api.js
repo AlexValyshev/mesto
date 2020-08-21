@@ -1,13 +1,12 @@
 export default class Api {
-  constructor(options) {
-    // тело конструктора
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
   }
 
-  getUserInfo() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me', {
-      headers: {
-        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867'
-      }
+  getUserInfo() { // Запрос на загрузку данных пользователя
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers
     })
       .then(res => {
         if (res.ok) {
@@ -17,11 +16,9 @@ export default class Api {
       });
   }
 
-  getInitialCards() {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-14/cards', {
-      headers: {
-        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867'
-      }
+  getInitialCards() { // Запрос на загрузку карточек
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers
     })
       .then(res => {
         if (res.ok) {
@@ -36,13 +33,10 @@ export default class Api {
     return Promise.all(this._promises);
   }
 
-  setUserInfo({ name, job }) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me', {
+  setUserInfo({ name, job }) { // Запрос на обновление данных пользователя
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: `${name}`,
         about: `${job}`
@@ -56,13 +50,10 @@ export default class Api {
       });
   }
 
-  addNewCard([{ name, link }]) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-14/cards', {
+  addNewCard([{ name, link }]) { // Запрос на добавление новой карточки
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: {
-        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: `${name}`,
         link: `${link}`
@@ -76,12 +67,10 @@ export default class Api {
       });
   }
 
-  deleteCard(itemId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-14/cards/${itemId}`, {
+  deleteCard(itemId) { // Запрос на удаление карточки
+    return fetch(`${this._baseUrl}/cards/${itemId}`, {
       method: 'DELETE',
-      headers: {
-        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867'
-      }
+      headers: this._headers
     })
       .then(res => {
         if (res.ok) {
@@ -91,13 +80,10 @@ export default class Api {
       });
   }
 
-  setUserAvatar({ avatar }) {
-    return fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me/avatar', {
+  setUserAvatar({ avatar }) { // Запрос на изменение аватара пользователя
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867',
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: `${avatar}`
       })
@@ -110,12 +96,10 @@ export default class Api {
       });
   }
 
-  addLikeCard(itemId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-14/cards/likes/${itemId}`, {
+  addLikeCard(itemId) { // Запрос на установку лайка
+    return fetch(`${this._baseUrl}/cards/likes/${itemId}`, {
       method: 'PUT',
-      headers: {
-        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867'
-      }
+      headers: this._headers
     })
       .then(res => {
         if (res.ok) {
@@ -125,12 +109,10 @@ export default class Api {
       });
   }
 
-  removeLikeCard(itemId) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-14/cards/likes/${itemId}`, {
+  removeLikeCard(itemId) { // Запрос на снятие лайка
+    return fetch(`${this._baseUrl}/cards/likes/${itemId}`, {
       method: 'DELETE',
-      headers: {
-        authorization: 'cede3324-4ffe-44e5-b1e3-3ccfef967867'
-      }
+      headers: this._headers
     })
       .then(res => {
         if (res.ok) {
@@ -139,8 +121,6 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
-
-  // другие методы работы с API
 }
 
 

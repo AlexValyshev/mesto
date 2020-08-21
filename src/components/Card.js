@@ -67,13 +67,11 @@ export default class Card {
   // Функция переключения "лайка" для карточки
   _handleLikeIcon() {
     if (!this._like.classList.contains('photo-place__like_active')) {
+      this._handleAddLike(this._itemId, this._numberLikes);
       this._like.classList.add('photo-place__like_active');
-      this._numberLikes.textContent = this._likesLength + 1;
-      this._handleAddLike(this._itemId);
     } else {
+      this._handleRemoveLike(this._itemId, this._numberLikes);
       this._like.classList.remove('photo-place__like_active');
-      this._numberLikes.textContent = this._numberLikes.textContent - 1;
-      this._handleRemoveLike(this._itemId);
     }
   }
 

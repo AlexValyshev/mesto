@@ -3,8 +3,7 @@ import {
   validationConfig, profileConfig, containerSelector, containerProfile,
   containerUserCards, containerViewImages, profileEditButton, formEditProfile, inputNameProfile,
   inputJobProfile, cardsAddButton, formAddCards, containerAvatar, avatar, formNewAvatar,
-  containerTrash, userName, userJob, profileSubmitSaveText, profileSubmitSavingText, cardSubmitSaveText,
-  cardSubmitSavingText, avatarSubmitSaveText, avatarSubmitSavingText, textDisabledClass
+  containerTrash, userName, userJob, textDisabledClass
 } from '../utils/constants.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
@@ -52,10 +51,10 @@ function handleTrashClick(itemId, handleDeleteCard, element) {
 }
 
 // Функция добавления колличества лайков
-function handleAddLike(itemId) {
+function handleAddLike(itemId, numberLikes) {
   api.addLikeCard(itemId) // Запрос на добавление лайка
     .then((result) => {
-      console.log(result);
+      numberLikes.textContent = result.likes.length;
     })
     .catch((err) => {
       console.log(err); // Выведем ошибку в консоль
@@ -63,10 +62,10 @@ function handleAddLike(itemId) {
 }
 
 // Функция уменьшения колличества лайков
-function handleRemoveLike(itemId) {
+function handleRemoveLike(itemId, numberLikes) {
   api.removeLikeCard(itemId) // Запрос на удаление лайка
     .then((result) => {
-      console.log(result);
+      numberLikes.textContent = result.likes.length;
     })
     .catch((err) => {
       console.log(err); // Выведем ошибку в консоль
@@ -87,7 +86,6 @@ const addCards = (items, userInfo) => {
 
 api.getInitialInfo()
   .then(([userInfo, initialCards]) => {
-    console.log(initialCards)
     avatar.style.backgroundImage = `url(${userInfo.avatar})`;// Загрузка информации о пользователе.
     userName.textContent = userInfo.name;
     userJob.textContent = userInfo.about;
@@ -97,10 +95,19 @@ api.getInitialInfo()
     console.log(err); // Выведем ошибку в консоль
   });
 
+function savingData(form, load) { // Функция отображения "лоадера" сохранения данных
+  if (load) {
+    form.querySelector('.popup__button-save').classList.add(textDisabledClass);
+    form.querySelector('.popup__button-saving').classList.remove(textDisabledClass);
+  } else {
+    form.querySelector('.popup__button-save').classList.remove(textDisabledClass);
+    form.querySelector('.popup__button-saving').classList.add(textDisabledClass);
+  }
+}
+
 const popupEditProfile = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Редактирования профиля".
   popupSelector: containerProfile, handleFormSubmit: (formData) => {
-    profileSubmitSaveText.classList.add(textDisabledClass);
-    profileSubmitSavingText.classList.remove(textDisabledClass);
+    savingData(formEditProfile, true);
     api.setUserInfo(formData) // Запрос на обновление данных профиля
       .then((result) => {
         userProfile.setUserInfo(result);
@@ -116,6 +123,7 @@ popupEditProfile.setEventListeners();
 const popupAddCards = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Добавления новых Карточек".
   popupSelector: containerUserCards, handleFormSubmit: (formData) => {
     const newCard = [{ name: formData.card, link: formData.link }];
+    savingData(formAddCards, true);
     api.addNewCard(newCard) // Загрузка новой карточки на сервер
       .then((result) => {
         addCards([result], result.owner);
@@ -131,15 +139,14 @@ popupAddCards.setEventListeners();
 
 const popupNewAvatar = new PopupWithForm({  // Создаём экземпляр "попапа" для формы "Изменения Аватара".
   popupSelector: containerAvatar, handleFormSubmit: (formData) => {
-
+    savingData(formNewAvatar, true);
     api.setUserAvatar(formData) // Загрузка нового аватара на сервер
       .then((result) => {
-        console.log(result);
+        avatar.style.backgroundImage = `url(${result.avatar})`;
       })
       .catch((err) => {
         console.log(err); // Выведем ошибку в консоль
       });
-    avatar.style.backgroundImage = `url(${formData.avatar})`;
     popupNewAvatar.closePopup();
   }
 });
@@ -156,8 +163,7 @@ formNewAvatarValidation.enableValidation(); //Запуск валидации ф
 
 profileEditButton.addEventListener('click', _ => {
   popupEditProfile.openPopup();
-  profileSubmitSaveText.classList.remove(textDisabledClass);
-  profileSubmitSavingText.classList.add(textDisabledClass);
+  savingData(formEditProfile, false);
   profileEditButton.blur();
   const { name, job } = userProfile.getUserInfo();
   inputNameProfile.value = name;
@@ -167,12 +173,14 @@ profileEditButton.addEventListener('click', _ => {
 
 cardsAddButton.addEventListener('click', _ => {
   popupAddCards.openPopup();
+  savingData(formAddCards, false);
   cardsAddButton.blur();
   formAddNewCardsValidation.resetForm(); //Очитска формы "Добавление новых карточек" от ошибок и переключение кнопки "сабмита"
 });
 
 avatar.addEventListener('click', _ => {
   popupNewAvatar.openPopup();
+  savingData(formNewAvatar, false);
   avatar.blur();
   formNewAvatarValidation.resetForm(); //Очитска формы "Изменение аватара" от ошибок и переключение кнопки "сабмита"
 });
